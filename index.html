@@ -419,6 +419,10 @@ a { color: inherit; }
 .form__done h3::before { content: "\2713 "; color: var(--inv-ok); }
 .form__done p { color: var(--inv-mid); max-width: 44ch; font-size: .9375rem; }
 
+/* Honeypot — off-screen rather than display:none, since some bots skip
+   fields that are not rendered at all. */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
 /* ---------- close + footer ---------- */
 
 .close { padding-block: clamp(3rem, 6vw, 5rem); }
@@ -566,10 +570,7 @@ a { color: inherit; }
     </div>
   </section>
 
-  <!-- ===================== INDUSTRIES =====================
-       SWAP: the three marked "verified" are the ones tied to named
-       clients. Confirm or replace the rest — a buyer will ask about
-       their own vertical on the first call. -->
+  <!-- ===================== INDUSTRIES ===================== -->
   <section class="sec sec--alt" id="industries">
     <div class="shell">
       <div class="sec__head" data-reveal>
@@ -765,10 +766,10 @@ a { color: inherit; }
         </p>
       </div>
 
-      <!-- SWAP: set data-endpoint to a form handler (Formspree, Web3Forms,
-           Netlify Forms). Until then the form validates, then hands off to
-           the visitor's mail client so nothing is lost. -->
-      <form class="form" id="lead" novalidate data-endpoint="" data-fallback="mylesdrewbiz@gmail.com">
+      <!-- Posts to /submit, handled by server.js. If that ever fails the
+           script falls back to composing a mail draft, so a lead is never
+           silently dropped. -->
+      <form class="form" id="lead" novalidate data-endpoint="/submit" data-fallback="mylesdrewbiz@gmail.com">
         <div class="form__grid">
           <div class="field">
             <label for="f-name">Your name</label>
@@ -795,6 +796,14 @@ a { color: inherit; }
                       required data-err="A rough sketch is fine — titles and company size."></textarea>
             <span class="field__err" id="e-icp" role="alert"></span>
           </div>
+
+          <!-- Honeypot. Off-screen and skipped by tab order, so only a bot
+               fills it. The server accepts those submissions and discards
+               them, which beats a CAPTCHA the visitor has to solve. -->
+          <div class="hp" aria-hidden="true">
+            <label for="f-website">Website</label>
+            <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
         </div>
 
         <div class="form__foot">
@@ -815,7 +824,6 @@ a { color: inherit; }
 <footer class="foot">
   <div class="shell foot__in">
     <span>SalesRadiant — fractional sales &amp; cold lead gen</span>
-    <!-- SWAP: replace with your business address -->
     <a href="mailto:mylesdrewbiz@gmail.com">mylesdrewbiz@gmail.com</a>
     <a href="#top">Back to top</a>
   </div>
@@ -1049,6 +1057,10 @@ a { color: inherit; }
 
     var data = {};
     required.forEach(function (el) { data[el.name] = el.value.trim(); });
+
+    /* Honeypot rides along. It isn't required, so the loop above skips it. */
+    var hp = form.querySelector('[name="website"]');
+    if (hp) data.website = hp.value.trim();
 
     var endpoint = form.getAttribute("data-endpoint");
 

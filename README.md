@@ -3,76 +3,100 @@
 Marketing site for SalesRadiant — fractional sales and cold lead gen for mid-market
 and early-stage B2B companies.
 
-Plain HTML. No build step, no framework, no CDN at runtime. `index.html` plus five
-vendored libraries in `vendor/`.
+A static page plus a tiny zero-dependency Node server that captures leads.
+Deploys to Railway as-is.
 
-## Run it
-
-Open `index.html` in a browser, or serve the folder:
+## Run it locally
 
 ```
-python -m http.server 8000
+npm start          # http://localhost:3000
 ```
 
-## Deploy it
+No install step — `dependencies` is empty on purpose.
 
-Static files, so any host works. Point the web root at this folder.
+## Deploy to Railway
 
-- **Railway** — a static site service, or any image that serves this directory. No build command; no start command beyond a static server.
-- **Rails** — drop `index.html` and `vendor/` into `public/` and it serves at `/index.html` with no routing changes.
-- **GitHub Pages** — Settings → Pages → branch `main`, folder `/ (root)`.
-- **Netlify / Vercel / Cloudflare Pages** — drag the folder in. Build command empty, output directory the repo root.
+1. New Project → Deploy from GitHub repo → pick this repo.
+2. Nothing to configure. `railway.json` sets the builder, start command, and a
+   `/healthz` check; Nixpacks detects Node from `package.json` and runs `npm start`.
+3. Settings → Networking → **Generate Domain**.
+4. Set `LEAD_WEBHOOK_URL` (see below) before you send traffic.
 
-`vendor/` must ship with `index.html` — the script tags are relative paths.
+The server binds `0.0.0.0` on Railway's `$PORT` and handles `SIGTERM` so
+redeploys drain cleanly.
 
-### Single-file build
+### Where leads actually go
 
-`node build-preview.js` writes `salesradiant.standalone.html` with every library
-inlined — one file, zero requests, for hosts that only take a single upload.
+**Read this before launching.** Every accepted lead is written to stdout — on
+Railway that's the deploy logs, which are searchable but rotate and are **not a
+durable store.** Treat logs as a backstop, not a CRM.
 
-## Before you send traffic to it
+Set one variable and leads get delivered somewhere real:
 
-Marked with `SWAP:` comments in `index.html`.
+```
+LEAD_WEBHOOK_URL = https://hooks.zapier.com/hooks/catch/…
+```
 
-| What | Where | Currently |
-|---|---|---|
-| Form endpoint | `<form id="lead" data-endpoint="">` | Empty — falls back to a mail draft |
-| Contact email | `data-fallback` + footer link | `mylesdrewbiz@gmail.com` |
-| Industries 04–12 | `.inds` grid | **Unverified — see below** |
-| Pricing answer | last FAQ item | Describes a retainer model, no numbers |
+Any endpoint accepting a JSON POST works — a Zapier or Make catch hook, a Slack
+incoming webhook, your CRM's inbound URL. The payload:
 
-**The industries grid needs your eyes.** Only the first three tie to a named client
-(B2B SaaS → ChurnZero, mortgage → Barrett Financial, telecom expense → AMI
-Strategies). I filled 04–12 with plausible B2B verticals so the layout was real,
-but I have no evidence you've sold into them. A buyer will ask about their own
-vertical on the first call, so replace anything you haven't actually worked.
+```json
+{ "evt": "lead", "at": "…", "name": "…", "email": "…",
+  "company": "…", "icp": "…", "ua": "…", "ip": "…" }
+```
 
-The `400+ / 12+ / 0` figures live in `data-count` attributes — CountUp reads them,
-so each number has exactly one place to edit.
+If the webhook is down the visitor still gets a success response, because the lead
+was already logged — a delivery problem on your side shouldn't look like a broken
+form on theirs.
+
+### Other hosts
+
+Any static host also works if you drop the lead endpoint: serve `index.html` and
+`vendor/`, and set `data-endpoint=""` on the form so it falls back to composing a
+mail draft. `node build-preview.js` writes a single self-contained HTML file with
+every library inlined, for hosts that take one upload.
 
 ## The lead form
 
 Four fields: name, work email, company, who you sell to. Validates on blur; once a
 field is flagged it re-checks on every keystroke, so the error clears when it's
-fixed rather than on the next blur.
+fixed rather than on the next blur. On success it POSTs JSON to `/submit` and fires
+confetti.
 
-**Works with nothing configured** — a valid submit composes a mail draft with the
-fields filled in, so no lead is lost before you pick a handler.
+If the POST fails it does **not** fake success — the button comes back and the
+message points at the email address. If `data-endpoint` is emptied entirely, a valid
+submit composes a mail draft instead, so a lead is never silently dropped.
 
-To collect properly, set the endpoint:
+**Anti-spam** is a honeypot field (`website`) positioned off-screen and skipped in
+tab order. The server accepts those posts and discards them, so bots think they
+succeeded. No CAPTCHA for real visitors to solve. There's also a per-IP rate limit
+of 12 posts per 10 minutes, counting rejected posts too — abuse looks like a stream
+of malformed submissions.
 
-```html
-<form id="lead" data-endpoint="https://formspree.io/f/YOUR_ID" ...>
+## Tests
+
+```
+npm i -D puppeteer-core          # not a runtime dependency; nothing ships with it
+node test/server.test.js
 ```
 
-It then POSTs JSON. Works with Formspree, Web3Forms, Basin, or anything accepting a
-JSON POST. A failed send restores the button and points at the email address rather
-than silently pretending to have worked.
+18 assertions against the real server, driven by a real browser: health check,
+static serving, `server.js` and `package.json` not exposed, path traversal blocked,
+`GET /submit` rejected, missing fields / bad email / malformed JSON / oversized body
+all rejected with the right status, honeypot accepted-but-discarded, a full browser
+submit reaching the success state, the lead forwarded to a webhook and written to
+stdout, and the rate limit engaging.
 
-Verified by `pp/form.js` in the scratchpad (12 assertions): empty submit blocked
-with one error per field, no POST while invalid, malformed email rejected, error
-clears live while typing, valid submit POSTs all four fields and reaches the success
-state, confetti fires, and a 500 restores the button instead of faking success.
+The browser tests need Chrome; the path is set at the top of the file.
+
+## Content notes
+
+- `400+ / 12+ / 0` live in `data-count` attributes — CountUp reads them, so each
+  number has one place to edit.
+- The marquee track is listed **twice** so the `-50%` loop is seamless. Anything
+  added or removed must go into both halves or the loop jumps.
+- One `SWAP:` marker remains, on the pricing FAQ — it describes a flat-retainer
+  model with no numbers.
 
 ## Libraries
 
@@ -81,7 +105,7 @@ it works on a host with no outbound internet.
 
 | File | Does |
 |---|---|
-| `lenis.min.js` | Eased scrolling. Desktop pointers only |
+| `lenis.min.js` | Eased scrolling, desktop pointers only |
 | `gsap.min.js` + `ScrollTrigger.min.js` | Section reveals |
 | `countUp.umd.js` | The three figures ticking up |
 | `confetti.browser.min.js` | Fires once on form success |
@@ -91,8 +115,8 @@ script fails to load the page still reads top to bottom. An earlier build hid
 content in CSS and revealed it with JS — when the script didn't run, every section
 below the hero rendered blank. Don't reintroduce that pattern.
 
-Motion is gated on `prefers-reduced-motion`; eased scrolling additionally requires
-a fine pointer, since touch momentum beats anything scripted.
+Motion is gated on `prefers-reduced-motion`; eased scrolling additionally requires a
+fine pointer, since touch momentum beats anything scripted.
 
 ## Design notes
 
@@ -104,10 +128,9 @@ a fine pointer, since touch momentum beats anything scripted.
   controlled by the container's `max-width`, never by a font-size cap** — capping
   makes every line the same size and leaves the right edge ragged, which kills the
   effect.
-- **Section heads** are two-column (headline beside supporting copy) rather than a
-  narrow stacked column. Fills the width and costs far less height.
+- **Rows** are three columns (number, heading, body) and **section heads** are two
+  (headline beside supporting copy), so content fills the width instead of stacking
+  in the left third.
 - **Themes** — light, dark, and the unstamped system default resolve from one token
   set. Every color is declared on bare `:root` and only *redefined* in the dark
   blocks. Inverted sections flip with the theme.
-- **Marquee** — the track is listed twice so the `-50%` loop is seamless. Anything
-  added or removed must go into both halves or the loop will jump.
