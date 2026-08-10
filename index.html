@@ -3,36 +3,39 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SalesRadiant — Cold Outbound That Books Meetings</title>
-<meta name="description" content="Cold calling isn't dead, it's just hard. 400+ meetings booked for B2B teams like ChurnZero, Barrett Financial, and AMI Strategies. Fractional sales and cold outbound." />
-<meta property="og:title" content="SalesRadiant — Cold outbound that books meetings" />
-<meta property="og:description" content="Cold calling isn't dead. It's just hard. 400+ meetings booked, every one sourced cold." />
+<title>SalesRadiant — Cold Lead Gen That Books Meetings</title>
+<meta name="description" content="Cold lead gen isn't dead, it's just hard. 400+ meetings booked across 12+ industries for B2B teams including ChurnZero, Barrett Financial, and AMI Strategies." />
+<meta property="og:title" content="SalesRadiant — Cold lead gen that books meetings" />
+<meta property="og:description" content="Cold lead gen isn't dead. It's just hard. 400+ meetings booked, every one sourced cold." />
 <meta property="og:type" content="website" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230B0B10'/%3E%3Ctext x='16' y='24' font-family='Helvetica,Arial,sans-serif' font-size='24' font-weight='bold' fill='%23FFFFFF' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230B0B10'/%3E%3Ctext x='16' y='24' font-family='Helvetica,Arial,sans-serif' font-size='23' font-weight='bold' fill='%231B3CF5' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E" />
 
 <style>
 /* ============================================================
    SalesRadiant
-   Big type, stark contrast, almost no chrome.
-   Every color is a token declared on bare :root first, then only
-   *redefined* in the dark blocks — so light, dark, and the
-   unstamped system default all resolve as complete sets.
+   Big type, stark contrast, minimal chrome — compact scale.
+
+   Two rules hold this file together:
+   1. Every color is a token declared on bare :root, then only
+      *redefined* in the dark blocks. Nothing exists in one theme
+      and vanishes in the other.
+   2. Nothing is hidden by CSS. Entrance states are set by GSAP at
+      runtime, so if a script fails to load the page still reads.
    ============================================================ */
 
 :root {
   --ground:     #FFFFFF;
-  --ground-alt: #F1F1F4;
+  --ground-alt: #F2F2F5;
   --ink:        #0B0B10;
   --ink-mid:    #4E4E58;
   --ink-soft:   #83838D;
-  --rule:       #E2E2E7;
+  --rule:       #E3E3E8;
   --rule-bold:  #0B0B10;
   --accent:     #1B3CF5;
   --accent-hi:  #0A28D6;
   --on-accent:  #FFFFFF;
 
-  /* Inverted blocks flip with the theme so the stark contrast
-     device keeps working in both directions. */
+  /* Inverted blocks flip with the theme so stark contrast works both ways. */
   --inv-ground: #0B0B10;
   --inv-ink:    #FFFFFF;
   --inv-mid:    #B4B4BE;
@@ -42,22 +45,21 @@
 
   --danger:     #C4142F;
   --inv-danger: #FF8395;
-  --ok:         #0F7A4A;
   --inv-ok:     #4FD6A0;
 
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --maxw: 82rem;
-  --pad: clamp(1.25rem, 4vw, 3.5rem);
+  --maxw: 75rem;
+  --pad: clamp(1.15rem, 3.4vw, 2.75rem);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --ground:     #0B0B10;
-    --ground-alt: #141419;
+    --ground-alt: #131318;
     --ink:        #F4F4F6;
     --ink-mid:    #A8A8B2;
     --ink-soft:   #74747E;
-    --rule:       #22222A;
+    --rule:       #23232B;
     --rule-bold:  #F4F4F6;
     --accent:     #7C93FF;
     --accent-hi:  #A3B4FF;
@@ -70,18 +72,17 @@
     --inv-accent: #1B3CF5;
     --danger:     #FF8395;
     --inv-danger: #C4142F;
-    --ok:         #4FD6A0;
     --inv-ok:     #0F7A4A;
   }
 }
 
 :root[data-theme="dark"] {
   --ground:     #0B0B10;
-  --ground-alt: #141419;
+  --ground-alt: #131318;
   --ink:        #F4F4F6;
   --ink-mid:    #A8A8B2;
   --ink-soft:   #74747E;
-  --rule:       #22222A;
+  --rule:       #23232B;
   --rule-bold:  #F4F4F6;
   --accent:     #7C93FF;
   --accent-hi:  #A3B4FF;
@@ -94,7 +95,6 @@
   --inv-accent: #1B3CF5;
   --danger:     #FF8395;
   --inv-danger: #C4142F;
-  --ok:         #4FD6A0;
   --inv-ok:     #0F7A4A;
 }
 
@@ -110,80 +110,79 @@ body {
   background: var(--ground);
   color: var(--ink);
   font-family: var(--sans);
-  font-size: clamp(1.0625rem, 1.15vw, 1.1875rem);
+  font-size: 1rem;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   font-variant-numeric: tabular-nums;
 }
 
-h1, h2, h3, p, ul, ol, figure { margin: 0; }
+h1, h2, h3, p, ul, ol, dl, dd, figure { margin: 0; }
 ul, ol { padding: 0; list-style: none; }
 a { color: inherit; }
 
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 ::selection { background: var(--accent); color: var(--on-accent); }
 
 .shell { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--pad); }
 
-/* clear the sticky header when jumping to an anchor */
-#work, #process, #contact { scroll-margin-top: 5.5rem; }
+#work, #industries, #process, #faq, #contact { scroll-margin-top: 4.75rem; }
 
-/* ---------- type system ---------- */
+/* ---------- type ---------- */
 
 /* Fit-to-width poster lines. The clamp is the pre-JS fallback;
    the script overrides font-size once it can measure. */
 .fit {
   display: block;
   white-space: nowrap;
-  font-size: clamp(2.5rem, 13vw, 11rem);
+  font-size: clamp(1.9rem, 9.5vw, 6.5rem);
   font-weight: 800;
-  line-height: 0.9;
-  letter-spacing: -0.045em;
+  line-height: 0.93;
+  letter-spacing: -0.042em;
   text-transform: uppercase;
 }
 
 .h2 {
-  font-size: clamp(2.25rem, 6.5vw, 4.75rem);
+  font-size: clamp(1.6rem, 3.9vw, 2.75rem);
   font-weight: 800;
-  line-height: 0.98;
-  letter-spacing: -0.04em;
+  line-height: 1.0;
+  letter-spacing: -0.036em;
   text-transform: uppercase;
   text-wrap: balance;
 }
 
 .h3 {
-  font-size: clamp(1.5rem, 3.6vw, 2.5rem);
+  font-size: clamp(1.0625rem, 1.75vw, 1.3125rem);
   font-weight: 750;
-  line-height: 1.05;
-  letter-spacing: -0.032em;
+  line-height: 1.2;
+  letter-spacing: -0.022em;
   text-wrap: balance;
 }
 
 .kicker {
-  font-size: .8125rem;
-  font-weight: 700;
-  letter-spacing: .18em;
+  font-size: .6875rem;
+  font-weight: 800;
+  letter-spacing: .19em;
   text-transform: uppercase;
   color: var(--accent);
 }
 
-.lede { font-size: clamp(1.1875rem, 1.9vw, 1.5rem); line-height: 1.45; max-width: 34ch; color: var(--ink-mid); letter-spacing: -0.015em; }
-.body { color: var(--ink-mid); max-width: 56ch; }
-.small { font-size: 1rem; color: var(--ink-soft); max-width: 52ch; line-height: 1.55; }
+.lede { font-size: clamp(1.0625rem, 1.5vw, 1.25rem); line-height: 1.5; max-width: 46ch; color: var(--ink-mid); letter-spacing: -0.012em; }
+.body { color: var(--ink-mid); max-width: 58ch; font-size: .9375rem; }
+.small { font-size: .9375rem; color: var(--ink-soft); max-width: 56ch; }
 
-/* ---------- link + button ---------- */
+/* ---------- buttons ---------- */
 
 .cta {
   display: inline-block;
-  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+  font-size: .9375rem;
   font-weight: 750;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.012em;
   text-decoration: none;
-  padding: .95rem 1.9rem;
+  padding: .72rem 1.4rem;
   background: var(--accent);
   color: var(--on-accent);
   border: 2px solid var(--accent);
-  transition: background-color .15s ease, border-color .15s ease;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
 }
 .cta:hover { background: var(--accent-hi); border-color: var(--accent-hi); }
 
@@ -193,309 +192,229 @@ a { color: inherit; }
 .cta--inv { background: var(--inv-accent); color: var(--inv-ground); border-color: var(--inv-accent); }
 .cta--inv:hover { filter: brightness(1.12); }
 
-.textlink {
-  text-decoration: none;
-  font-weight: 700;
-  color: var(--ink);
-  box-shadow: inset 0 -2px 0 var(--accent);
-  transition: box-shadow .15s ease, color .15s ease;
-}
-.textlink:hover { color: var(--accent); box-shadow: inset 0 -0.75em 0 color-mix(in srgb, var(--accent) 14%, transparent); }
-
 /* ---------- header ---------- */
 
-.top {
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  background: var(--ground);
-  border-bottom: 1px solid var(--rule);
-}
-.top__in {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-block: 1.05rem;
-}
-.brand {
-  font-size: clamp(.9375rem, 1.5vw, 1.0625rem);
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  text-decoration: none;
-}
+.top { position: sticky; top: 0; z-index: 40; background: var(--ground); border-bottom: 1px solid var(--rule); }
+.top__in { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .8rem; }
+
+.brand { font-size: .9375rem; font-weight: 800; letter-spacing: -0.01em; text-transform: uppercase; text-decoration: none; }
 .brand em { font-style: normal; color: var(--accent); }
 
+.top__nav { display: flex; align-items: center; gap: 1.6rem; }
+.top__nav a.nav { font-size: .8125rem; font-weight: 650; text-decoration: none; color: var(--ink-mid); transition: color .15s ease; }
+.top__nav a.nav:hover { color: var(--accent); }
+@media (max-width: 46rem) { .top__nav a.nav { display: none; } }
+
 .top__link {
-  font-size: .8125rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: .55rem 1.05rem;
-  border: 2px solid var(--rule-bold);
+  font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  text-decoration: none; padding: .5rem .95rem; border: 2px solid var(--rule-bold);
   transition: background-color .15s ease, color .15s ease;
 }
 .top__link:hover { background: var(--ink); color: var(--ground); }
 
 /* ---------- hero ---------- */
 
-.hero { padding-block: clamp(3.5rem, 9vw, 8rem) clamp(3rem, 6vw, 5rem); }
+.hero { padding-block: clamp(2.5rem, 5.5vw, 4.5rem) clamp(2rem, 4vw, 3rem); }
 
-.hero__type { display: flex; flex-direction: column; gap: .04em; }
+/* The type is sized to fill this box exactly, so the box width — not a
+   font-size cap — is what controls the scale. Capping the size instead
+   would leave the lines ragged on the right and kill the poster effect. */
+.hero__type { display: flex; flex-direction: column; gap: .03em; max-width: 58rem; }
 .hero__type .accent { color: var(--accent); }
 
 .hero__foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 2rem 3rem;
-  margin-top: clamp(2.25rem, 5vw, 3.75rem);
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+  gap: 1.5rem 3rem; margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
 }
-.hero__actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: .65rem; }
 
-/* One orchestrated moment: the three lines clip up, staggered. */
-.reveal > * {
-  clip-path: inset(0 0 110% 0);
-  transform: translateY(0.14em);
-  animation: rise .82s cubic-bezier(.19,1,.22,1) forwards;
-}
-.reveal > *:nth-child(1) { animation-delay: .04s; }
-.reveal > *:nth-child(2) { animation-delay: .13s; }
-.reveal > *:nth-child(3) { animation-delay: .22s; }
+/* ---------- marquee ---------- */
 
-@keyframes rise {
-  to { clip-path: inset(-0.2em -0.2em -0.2em -0.2em); transform: translateY(0); }
+.marquee { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding-block: 1.1rem; overflow: hidden; }
+.marquee__label { font-size: .6875rem; font-weight: 800; letter-spacing: .19em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: .8rem; }
+
+.marquee__mask { overflow: hidden; position: relative; }
+.marquee__track { display: flex; width: max-content; animation: slide 32s linear infinite; }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+.marquee__track > span {
+  display: inline-flex; align-items: center; gap: 1.6rem; padding-right: 1.6rem;
+  font-size: clamp(1.05rem, 2.1vw, 1.65rem); font-weight: 800;
+  letter-spacing: -0.03em; text-transform: uppercase; white-space: nowrap;
 }
+.marquee__track > span::after { content: "\2014"; color: var(--accent); font-weight: 600; }
+
+@keyframes slide { to { transform: translateX(-50%); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal > * { animation: none; clip-path: none; transform: none; }
+  .marquee__track { animation: none; width: auto; flex-wrap: wrap; gap: .4rem 0; }
+  .marquee__track > span:nth-child(n+7) { display: none; }
 }
 
-/* ---------- client strip ---------- */
-
-.strip { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding-block: clamp(1.75rem, 3.5vw, 2.5rem); }
-.strip__label { font-size: .75rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 1rem; }
-.strip__names {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: .35em 1.5em;
-  font-size: clamp(1.375rem, 3.6vw, 2.6rem);
-  font-weight: 800;
-  letter-spacing: -0.035em;
-  line-height: 1.05;
-  text-transform: uppercase;
-}
-.strip__names span:not(:last-child)::after { content: " /"; color: var(--accent); }
-
-/* ---------- big numbers ---------- */
+/* ---------- figures ---------- */
 
 .figures {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 2.5rem 2rem;
-  padding-block: clamp(3.5rem, 8vw, 6rem);
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem; padding-block: clamp(2.5rem, 5.5vw, 4.25rem);
 }
-@media (max-width: 56rem) { .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 46rem) { .figures { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; } }
 
-.figure__n {
-  display: block;
-  font-size: clamp(3.25rem, 8.5vw, 6.5rem);
-  font-weight: 800;
-  line-height: .88;
-  letter-spacing: -0.055em;
-}
-.figure__t { display: block; margin-top: .6rem; font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
-.figure__s { display: block; margin-top: .15rem; font-size: .9375rem; color: var(--ink-soft); }
+.figure__n { display: block; font-size: clamp(2.75rem, 6.5vw, 4.5rem); font-weight: 800; line-height: .9; letter-spacing: -0.05em; }
+.figure__t { display: block; margin-top: .45rem; font-size: .9375rem; font-weight: 750; }
+.figure__s { display: block; margin-top: .1rem; font-size: .875rem; color: var(--ink-soft); }
 
-/* ---------- generic section ---------- */
+/* ---------- sections ---------- */
 
-.sec { padding-block: clamp(3.5rem, 8vw, 6.5rem); }
+.sec { padding-block: clamp(2.75rem, 5.5vw, 4.5rem); }
 .sec--line { border-top: 1px solid var(--rule); }
 .sec--alt { background: var(--ground-alt); }
 
-.sec__head { max-width: 22ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
-.sec__head .kicker { display: block; margin-bottom: 1rem; }
-.sec__head .body { margin-top: 1.25rem; }
+/* Headline and supporting copy sit side by side rather than stacked in a
+   narrow column — fills the width and costs far less vertical space. */
+.sec__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: .55rem clamp(2rem, 5vw, 4rem);
+  align-items: end;
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
+}
+.sec__head .kicker { grid-column: 1 / -1; }
+.sec__head .h2 { max-width: 17ch; }
+.sec__head .body { max-width: 44ch; padding-bottom: .2rem; }
 
-/* ---------- big-type numbered rows (no cards, no borders but a hairline) ---------- */
+@media (max-width: 48rem) {
+  .sec__head { grid-template-columns: minmax(0, 1fr); gap: .75rem; align-items: start; }
+  .sec__head .h2, .sec__head .body { max-width: 40ch; }
+}
+
+/* ---------- rows ---------- */
 
 .rows { display: flex; flex-direction: column; }
-
-.row {
-  display: grid;
-  grid-template-columns: 4.5rem minmax(0, 1fr);
-  gap: 1rem 2.5rem;
-  padding-block: clamp(1.75rem, 3.5vw, 2.75rem);
-  border-top: 1px solid var(--rule);
-}
+.row { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: .6rem 1.75rem; padding-block: clamp(1.15rem, 2.2vw, 1.6rem); border-top: 1px solid var(--rule); }
 .row:last-child { border-bottom: 1px solid var(--rule); }
+.row__n { font-size: .8125rem; font-weight: 800; letter-spacing: .04em; color: var(--accent); padding-top: .35em; }
+.row__b { display: flex; flex-direction: column; gap: .4rem; }
+.row__b p { color: var(--ink-mid); max-width: 60ch; font-size: .9375rem; }
+@media (max-width: 40rem) { .row { grid-template-columns: minmax(0, 1fr); gap: .35rem; } .row__n { padding-top: 0; } }
 
-.row__n { font-size: 1rem; font-weight: 800; letter-spacing: .04em; color: var(--accent); padding-top: .55em; }
-.row__b { display: flex; flex-direction: column; gap: .75rem; }
-.row__b p { color: var(--ink-mid); max-width: 54ch; }
+/* ---------- industries ---------- */
 
-@media (max-width: 40rem) {
-  .row { grid-template-columns: minmax(0, 1fr); gap: .5rem; }
-  .row__n { padding-top: 0; }
+.inds { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+@media (max-width: 60rem) { .inds { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 40rem) { .inds { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.ind {
+  background: var(--ground); padding: 1.05rem 1rem 1.15rem;
+  display: flex; flex-direction: column; gap: .2rem;
+  transition: background-color .15s ease;
 }
+.sec--alt .ind { background: var(--ground-alt); }
+.ind:hover { background: var(--accent); }
+.ind:hover .ind__n, .ind:hover .ind__i { color: var(--on-accent); }
+.ind__i { font-size: .6875rem; font-weight: 800; letter-spacing: .12em; color: var(--ink-soft); }
+.ind__n { font-size: .9375rem; font-weight: 750; letter-spacing: -0.015em; line-height: 1.25; }
 
-/* ---------- inverted block ---------- */
+/* ---------- inverted ---------- */
 
 .inv { background: var(--inv-ground); color: var(--inv-ink); }
 .inv .kicker { color: var(--inv-accent); }
 .inv .body, .inv .row__b p { color: var(--inv-mid); }
 .inv .small { color: var(--inv-soft); }
-.inv .row { border-color: var(--inv-rule); }
-.inv .row:last-child { border-bottom-color: var(--inv-rule); }
+.inv .row, .inv .row:last-child { border-color: var(--inv-rule); }
 .inv .row__n { color: var(--inv-accent); }
 
-/* "won't do" list — big type, struck through, no boxes */
 .wont { display: flex; flex-direction: column; }
 .wont li {
-  padding-block: clamp(1.1rem, 2.4vw, 1.6rem);
-  border-top: 1px solid var(--inv-rule);
-  font-size: clamp(1.375rem, 3.4vw, 2.35rem);
-  font-weight: 750;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  display: flex;
-  align-items: baseline;
-  gap: .6em;
+  padding-block: clamp(.85rem, 1.8vw, 1.2rem); border-top: 1px solid var(--inv-rule);
+  font-size: clamp(1.05rem, 2.4vw, 1.65rem); font-weight: 750; letter-spacing: -0.028em;
+  line-height: 1.15; display: flex; align-items: baseline; gap: .55em;
 }
 .wont li:last-child { border-bottom: 1px solid var(--inv-rule); }
 .wont li::before { content: "\00D7"; color: var(--inv-accent); font-weight: 800; flex: none; }
 
-/* ---------- two-column fit lists ---------- */
+/* ---------- split ---------- */
 
-.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2.5rem, 5vw, 4.5rem); }
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.75rem, 4vw, 3.5rem); }
 @media (max-width: 48rem) { .split { grid-template-columns: minmax(0, 1fr); } }
 
-.split__h { font-size: .8125rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; padding-bottom: 1rem; border-bottom: 2px solid currentColor; }
+.split__h { font-size: .6875rem; font-weight: 800; letter-spacing: .19em; text-transform: uppercase; padding-bottom: .7rem; border-bottom: 2px solid currentColor; }
 .split__h--y { color: var(--accent); }
 .split__h--n { color: var(--ink-soft); }
+.split__l { display: flex; flex-direction: column; }
+.split__l li { padding-block: .75rem; border-bottom: 1px solid var(--rule); color: var(--ink-mid); font-size: .9375rem; }
 
-.split__l { display: flex; flex-direction: column; margin-top: .5rem; }
-.split__l li { padding-block: 1rem; border-bottom: 1px solid var(--rule); color: var(--ink-mid); }
+/* ---------- faq (native details, no JS needed) ---------- */
 
-/* ---------- closing ---------- */
+.faq { display: flex; flex-direction: column; }
+.faq details { border-top: 1px solid var(--rule); }
+.faq details:last-of-type { border-bottom: 1px solid var(--rule); }
 
-.close { padding-block: clamp(4rem, 9vw, 7.5rem); }
-.close__type { display: flex; flex-direction: column; gap: .04em; }
-.close__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: clamp(2.25rem, 4.5vw, 3.25rem); }
-
-/* ---------- scroll reveals ----------
-   Gated behind .has-js so the page is fully visible if the script
-   never runs. Stagger comes from an inline --d on each element. */
-
-.has-js .rv {
-  opacity: 0;
-  transform: translateY(1.15rem);
-  transition: opacity .72s cubic-bezier(.19,1,.22,1) var(--d, 0s),
-              transform .72s cubic-bezier(.19,1,.22,1) var(--d, 0s);
-  will-change: opacity, transform;
+.faq summary {
+  list-style: none; cursor: pointer; padding-block: 1.05rem;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem;
+  font-size: 1.0625rem; font-weight: 750; letter-spacing: -0.02em;
 }
-.has-js .rv.is-in { opacity: 1; transform: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--accent); font-weight: 800; font-size: 1.25rem; line-height: 1; flex: none; }
+.faq details[open] summary::after { content: "\2013"; }
+.faq summary:hover { color: var(--accent); }
+.faq dd, .faq .ans { padding-bottom: 1.15rem; color: var(--ink-mid); max-width: 62ch; font-size: .9375rem; }
 
-@media (prefers-reduced-motion: reduce) {
-  .has-js .rv { opacity: 1; transform: none; transition: none; }
-}
+/* ---------- form ---------- */
 
-/* ---------- lead form ---------- */
-
-.form { margin-top: clamp(2.25rem, 4.5vw, 3.25rem); max-width: 46rem; }
-
-.form__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.75rem 2rem;
-}
+.form { max-width: 44rem; }
+@media (max-width: 56rem) { .form { margin-top: 2rem; } }
+.form__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.35rem 1.75rem; }
 @media (max-width: 40rem) { .form__grid { grid-template-columns: minmax(0, 1fr); } }
 
-.field { display: flex; flex-direction: column; gap: .45rem; }
+.field { display: flex; flex-direction: column; gap: .35rem; }
 .field--wide { grid-column: 1 / -1; }
+.field > label { font-size: .6875rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--inv-soft); }
 
-.field > label {
-  font-size: .75rem;
-  font-weight: 800;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--inv-soft);
+.field input, .field textarea {
+  font: inherit; font-size: 1rem; color: var(--inv-ink); background: transparent;
+  border: 0; border-bottom: 2px solid var(--inv-rule); border-radius: 0;
+  padding: .45rem 0; width: 100%; transition: border-color .15s ease;
 }
+.field textarea { resize: vertical; min-height: 3em; line-height: 1.45; }
+.field input::placeholder, .field textarea::placeholder { color: var(--inv-soft); opacity: .6; }
+.field input:focus, .field textarea:focus { outline: none; border-bottom-color: var(--inv-accent); }
+.field input:focus-visible, .field textarea:focus-visible { outline: none; }
+.field input[aria-invalid="true"], .field textarea[aria-invalid="true"] { border-bottom-color: var(--inv-danger); }
+.field__err { font-size: .8125rem; color: var(--inv-danger); min-height: 1.25em; line-height: 1.25; }
 
-.field input,
-.field textarea {
-  font: inherit;
-  font-size: 1.0625rem;
-  color: var(--inv-ink);
-  background: transparent;
-  border: 0;
-  border-bottom: 2px solid var(--inv-rule);
-  border-radius: 0;
-  padding: .55rem 0;
-  transition: border-color .15s ease;
-  width: 100%;
-}
-.field textarea { resize: vertical; min-height: 3.2em; line-height: 1.45; }
-
-.field input::placeholder,
-.field textarea::placeholder { color: var(--inv-soft); opacity: .65; }
-
-.field input:focus,
-.field textarea:focus { outline: none; border-bottom-color: var(--inv-accent); }
-.field input:focus-visible,
-.field textarea:focus-visible { outline: none; }
-
-.field input[aria-invalid="true"],
-.field textarea[aria-invalid="true"] { border-bottom-color: var(--inv-danger); }
-
-.field__err {
-  font-size: .875rem;
-  color: var(--inv-danger);
-  min-height: 1.3em;
-  line-height: 1.3;
-}
-
-.form__foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem 1.75rem;
-  margin-top: 2.25rem;
-}
-.form__note { font-size: .9375rem; color: var(--inv-soft); max-width: 30ch; }
-
+.form__foot { display: flex; flex-wrap: wrap; align-items: center; gap: .85rem 1.5rem; margin-top: 1.75rem; }
 .form__submit {
-  font: inherit;
-  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
-  font-weight: 750;
-  letter-spacing: -0.02em;
-  padding: .95rem 1.9rem;
-  background: var(--inv-accent);
-  color: var(--inv-ground);
-  border: 2px solid var(--inv-accent);
-  cursor: pointer;
-  transition: filter .15s ease;
+  font: inherit; font-size: .9375rem; font-weight: 750; padding: .72rem 1.4rem;
+  background: var(--inv-accent); color: var(--inv-ground); border: 2px solid var(--inv-accent);
+  cursor: pointer; transition: filter .15s ease;
 }
 .form__submit:hover { filter: brightness(1.12); }
 .form__submit[disabled] { opacity: .55; cursor: default; }
+.form__note { font-size: .875rem; color: var(--inv-soft); max-width: 30ch; }
 
-/* Success state replaces the form in place. */
 .form__done { display: none; }
-.form.is-done .form__grid,
-.form.is-done .form__foot { display: none; }
-.form.is-done .form__done { display: flex; flex-direction: column; gap: .85rem; }
-.form__done h3 { font-size: clamp(1.5rem, 3.2vw, 2.15rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+.form.is-done .form__grid, .form.is-done .form__foot { display: none; }
+.form.is-done .form__done { display: flex; flex-direction: column; gap: .6rem; }
+.form__done h3 { font-size: clamp(1.35rem, 3vw, 1.9rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
 .form__done h3::before { content: "\2713 "; color: var(--inv-ok); }
-.form__done p { color: var(--inv-mid); max-width: 44ch; }
+.form__done p { color: var(--inv-mid); max-width: 44ch; font-size: .9375rem; }
 
-/* ---------- footer ---------- */
+/* ---------- close + footer ---------- */
 
-.foot { border-top: 1px solid var(--rule); padding-block: 2.25rem 3rem; }
-.foot__in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem 2rem; font-size: .875rem; color: var(--ink-soft); }
+.close { padding-block: clamp(3rem, 6vw, 5rem); }
+.close__type { display: flex; flex-direction: column; gap: .03em; }
+
+.close__grid {
+  display: grid;
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+  gap: clamp(2rem, 4.5vw, 3.75rem);
+  align-items: start;
+}
+@media (max-width: 56rem) { .close__grid { grid-template-columns: minmax(0, 1fr); } }
+
+.foot { border-top: 1px solid var(--rule); padding-block: 1.75rem 2.25rem; }
+.foot__in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .6rem 2rem; font-size: .8125rem; color: var(--ink-soft); }
 .foot__in a { text-decoration: none; }
 .foot__in a:hover { color: var(--accent); }
 </style>
@@ -506,7 +425,13 @@ a { color: inherit; }
 <header class="top">
   <div class="shell top__in">
     <a class="brand" href="#top">Sales<em>Radiant</em></a>
-    <a class="top__link" href="#contact">Book a call</a>
+    <nav class="top__nav" aria-label="Primary">
+      <a class="nav" href="#work">What I do</a>
+      <a class="nav" href="#industries">Industries</a>
+      <a class="nav" href="#process">Process</a>
+      <a class="nav" href="#faq">FAQ</a>
+      <a class="top__link" href="#contact">Book a call</a>
+    </nav>
   </div>
 </header>
 
@@ -515,16 +440,16 @@ a { color: inherit; }
   <!-- ===================== HERO ===================== -->
   <section class="hero">
     <div class="shell">
-      <h1 class="hero__type reveal" data-fit-group>
-        <span class="fit" data-fit>Cold calling</span>
+      <h1 class="hero__type" data-hero>
+        <span class="fit" data-fit>Cold lead gen</span>
         <span class="fit" data-fit>isn't dead.</span>
         <span class="fit accent" data-fit>It's just hard.</span>
       </h1>
 
       <div class="hero__foot">
         <p class="lede">
-          So most teams quit. I don't — 400+ meetings booked for B2B companies,
-          every one sourced from a cold email or a cold dial.
+          So most teams quit at month one. I don't — 400+ meetings booked across
+          12+ industries, every one sourced cold from an inbox or a dial tone.
         </p>
         <div class="hero__actions">
           <a class="cta" href="#contact">Book a 20-min call</a>
@@ -534,37 +459,40 @@ a { color: inherit; }
     </div>
   </section>
 
-  <!-- ===================== CLIENTS ===================== -->
-  <section class="strip">
-    <div class="shell">
-      <p class="strip__label">Booked meetings for</p>
-      <p class="strip__names">
+  <!-- ===================== CLIENT MARQUEE ===================== -->
+  <section class="marquee" aria-label="Track record">
+    <div class="shell"><p class="marquee__label">Track record</p></div>
+    <div class="marquee__mask">
+      <!-- The list appears twice so the -50% loop is seamless. Anything you
+           add or remove must go into BOTH halves or the loop will jump. -->
+      <div class="marquee__track">
         <span>ChurnZero</span><span>Barrett Financial</span><span>AMI Strategies</span>
-      </p>
+        <span>400+ meetings booked</span><span>12+ industries</span><span>B2B SaaS</span>
+        <span>Mortgage &amp; lending</span><span>Telecom expense</span><span>Cold email + cold calling</span>
+
+        <span>ChurnZero</span><span>Barrett Financial</span><span>AMI Strategies</span>
+        <span>400+ meetings booked</span><span>12+ industries</span><span>B2B SaaS</span>
+        <span>Mortgage &amp; lending</span><span>Telecom expense</span><span>Cold email + cold calling</span>
+      </div>
     </div>
   </section>
 
   <!-- ===================== FIGURES ===================== -->
   <section>
-    <div class="shell figures">
-      <div class="rv" style="--d:0s">
+    <div class="shell figures" data-stagger>
+      <div>
         <span class="figure__n" data-count="400" data-suffix="+">400+</span>
         <span class="figure__t">Meetings booked</span>
         <span class="figure__s">Every one sourced cold</span>
       </div>
-      <div class="rv" style="--d:.08s">
-        <span class="figure__n" data-count="3">3</span>
+      <div>
+        <span class="figure__n" data-count="12" data-suffix="+">12+</span>
         <span class="figure__t">Industries sold into</span>
-        <span class="figure__s">SaaS, lending, telecom</span>
+        <span class="figure__s">SaaS to mortgage to telecom</span>
       </div>
-      <div class="rv" style="--d:.16s">
-        <span class="figure__n" data-count="2">2</span>
-        <span class="figure__t">Channels, daily</span>
-        <span class="figure__s">The inbox and the phone</span>
-      </div>
-      <div class="rv" style="--d:.24s">
+      <div>
         <span class="figure__n" data-count="0">0</span>
-        <span class="figure__t">Headcount added</span>
+        <span class="figure__t">Headcount you add</span>
         <span class="figure__s">Fractional, not a hire</span>
       </div>
     </div>
@@ -573,7 +501,7 @@ a { color: inherit; }
   <!-- ===================== WHAT I DO ===================== -->
   <section class="sec sec--line" id="work">
     <div class="shell">
-      <div class="sec__head">
+      <div class="sec__head" data-reveal>
         <span class="kicker">What I do</span>
         <h2 class="h2">You don't have a tool problem.</h2>
         <p class="body">
@@ -583,63 +511,94 @@ a { color: inherit; }
         </p>
       </div>
 
-      <ol class="rows">
+      <ol class="rows" data-stagger>
         <li class="row">
           <span class="row__n">01</span>
           <div class="row__b">
             <h3 class="h3">Cold calls, every day</h3>
-            <p>Real dials into real gatekeepers. Not a "call block" that gets moved.
-               A four-minute conversation surfaces timing and budget that no email
-               sequence ever will.</p>
+            <p>Real dials into real gatekeepers — not a "call block" that keeps getting
+               moved. Four minutes on the phone surfaces timing and budget that no
+               email sequence ever will.</p>
           </div>
         </li>
         <li class="row">
           <span class="row__n">02</span>
           <div class="row__b">
             <h3 class="h3">Email written per account</h3>
-            <p>Domains, inboxes, deliverability, and copy. If a message could have
-               been sent to a thousand companies without changing a word, it
-               doesn't go out.</p>
+            <p>Domains, inboxes, deliverability, and copy. If a message could go to a
+               thousand companies without changing a word, it doesn't go out.</p>
           </div>
         </li>
         <li class="row">
           <span class="row__n">03</span>
           <div class="row__b">
             <h3 class="h3">Qualifying, out loud</h3>
-            <p>Problem, timing, budget, and who else signs — confirmed on the call,
-               not guessed from a form fill. Half the value here is the meetings
-               I <em>don't</em> book.</p>
+            <p>Problem, timing, budget, and who else signs — confirmed on the call, not
+               guessed from a form fill. Half the value here is the meetings I
+               <em>don't</em> book.</p>
           </div>
         </li>
         <li class="row">
           <span class="row__n">04</span>
           <div class="row__b">
             <h3 class="h3">A handoff that sticks</h3>
-            <p>Your rep opens the invite already knowing the story: why they took
-               it, what they're fixing, who else is in the room. No cold restarts.</p>
+            <p>Your rep opens the invite already knowing the story: why they took it,
+               what they're fixing, who else is in the room. No cold restarts.</p>
           </div>
         </li>
       </ol>
     </div>
   </section>
 
+  <!-- ===================== INDUSTRIES =====================
+       SWAP: the three marked "verified" are the ones tied to named
+       clients. Confirm or replace the rest — a buyer will ask about
+       their own vertical on the first call. -->
+  <section class="sec sec--alt" id="industries">
+    <div class="shell">
+      <div class="sec__head" data-reveal>
+        <span class="kicker">Industries</span>
+        <h2 class="h2">The script changes. The discipline doesn't.</h2>
+        <p class="body">
+          Twelve-plus verticals, each with a different buyer, a different objection,
+          and a different reason they stopped picking up. The research changes every
+          time; the daily activity never does.
+        </p>
+      </div>
+
+      <div class="inds" data-stagger>
+        <div class="ind"><span class="ind__i">01</span><span class="ind__n">B2B SaaS</span></div>
+        <div class="ind"><span class="ind__i">02</span><span class="ind__n">Mortgage &amp; lending</span></div>
+        <div class="ind"><span class="ind__i">03</span><span class="ind__n">Telecom expense</span></div>
+        <div class="ind"><span class="ind__i">04</span><span class="ind__n">Customer success</span></div>
+        <div class="ind"><span class="ind__i">05</span><span class="ind__n">Financial services</span></div>
+        <div class="ind"><span class="ind__i">06</span><span class="ind__n">Insurance</span></div>
+        <div class="ind"><span class="ind__i">07</span><span class="ind__n">Healthcare IT</span></div>
+        <div class="ind"><span class="ind__i">08</span><span class="ind__n">Logistics &amp; freight</span></div>
+        <div class="ind"><span class="ind__i">09</span><span class="ind__n">Manufacturing</span></div>
+        <div class="ind"><span class="ind__i">10</span><span class="ind__n">Staffing &amp; recruiting</span></div>
+        <div class="ind"><span class="ind__i">11</span><span class="ind__n">Professional services</span></div>
+        <div class="ind"><span class="ind__i">12</span><span class="ind__n">Cybersecurity</span></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== WHAT I WON'T DO ===================== -->
   <section class="sec inv">
     <div class="shell">
-      <div class="sec__head">
+      <div class="sec__head" data-reveal>
         <span class="kicker">The short version</span>
         <h2 class="h2">What I won't do.</h2>
       </div>
-      <ul class="wont">
+      <ul class="wont" data-stagger>
         <li>Buy you a scraped list</li>
         <li>Report open rates as progress</li>
         <li>Book a junk meeting to hit a number</li>
         <li>Pretend this works in month one</li>
       </ul>
-      <p class="small" style="margin-top: 2rem;">
-        Outbound compounds. The first month is list, messaging, and finding which
-        objection actually stops the conversation. Month two is when the calendar
-        starts filling.
+      <p class="small" style="margin-top: 1.5rem;">
+        Outbound compounds. Month one is list, messaging, and finding which objection
+        actually stops the conversation. Month two is when the calendar fills.
       </p>
     </div>
   </section>
@@ -647,40 +606,39 @@ a { color: inherit; }
   <!-- ===================== PROCESS ===================== -->
   <section class="sec" id="process">
     <div class="shell">
-      <div class="sec__head">
+      <div class="sec__head" data-reveal>
         <span class="kicker">Process</span>
         <h2 class="h2">Five steps. Same order, every account.</h2>
         <p class="body">
-          None of it is proprietary. It's just done consistently — which is the
-          part nobody can sustain while also closing deals.
+          None of it is proprietary. It's just done consistently — which is the part
+          nobody can sustain while also closing deals.
         </p>
       </div>
 
-      <ol class="rows">
+      <ol class="rows" data-stagger>
         <li class="row">
           <span class="row__n">01</span>
           <div class="row__b">
             <h3 class="h3">Agree on who counts</h3>
-            <p>Titles, company size, trigger events. We settle what "qualified"
-               means before I make a single dial, so nobody argues about lead
-               quality in week three.</p>
+            <p>Titles, company size, trigger events. We settle what "qualified" means
+               before I make a single dial, so nobody argues about lead quality in
+               week three.</p>
           </div>
         </li>
         <li class="row">
           <span class="row__n">02</span>
           <div class="row__b">
             <h3 class="h3">Build the list by hand</h3>
-            <p>Account by account, verified. Bulk lists burn your sending domain
-               and waste the calls.</p>
+            <p>Account by account, verified. Bulk lists burn your sending domain and
+               waste the calls.</p>
           </div>
         </li>
         <li class="row">
           <span class="row__n">03</span>
           <div class="row__b">
             <h3 class="h3">Run both channels at once</h3>
-            <p>Sequences run against the same accounts I'm dialing. Whichever one
-               they answer, there's a person on the other end who knows their
-               business.</p>
+            <p>Sequences run against the same accounts I'm dialing. Whichever one they
+               answer, there's a person on the other end who knows their business.</p>
           </div>
         </li>
         <li class="row">
@@ -706,11 +664,11 @@ a { color: inherit; }
   <!-- ===================== FIT ===================== -->
   <section class="sec sec--alt">
     <div class="shell">
-      <div class="sec__head">
+      <div class="sec__head" data-reveal>
         <span class="kicker">Fit</span>
         <h2 class="h2">I'd rather tell you no now.</h2>
       </div>
-      <div class="split">
+      <div class="split" data-stagger>
         <div>
           <h3 class="split__h split__h--y">Worth a call</h3>
           <ul class="split__l">
@@ -735,22 +693,75 @@ a { color: inherit; }
     </div>
   </section>
 
-  <!-- ===================== CLOSE ===================== -->
-  <section class="close inv" id="contact">
+  <!-- ===================== FAQ ===================== -->
+  <section class="sec" id="faq">
     <div class="shell">
-      <h2 class="close__type" data-fit-group>
-        <span class="fit" data-fit>Tell me who</span>
-        <span class="fit" data-fit>you sell to.</span>
-      </h2>
-      <p class="body" style="margin-top: 2rem; font-size: 1.1875rem;">
-        Twenty minutes, no deck. Your ICP, what outbound you've already tried, and
-        what a real meeting is worth to you. If it's not a fit, you'll know before
-        we hang up.
-      </p>
+      <div class="sec__head" data-reveal>
+        <span class="kicker">Questions</span>
+        <h2 class="h2">The ones I get on every first call.</h2>
+      </div>
+
+      <div class="faq" data-stagger>
+        <details>
+          <summary>How fast do meetings start landing?</summary>
+          <div class="ans">Usually week three or four. Weeks one and two are list build,
+            domain warm-up, and finding the message that gets a reply. Anyone promising
+            you meetings in week one is either sitting on a bought list or planning to
+            book anybody who picks up.</div>
+        </details>
+        <details>
+          <summary>Do you use my domain or your own?</summary>
+          <div class="ans">Mine. I set up separate sending domains that redirect to your
+            site, so if deliverability takes a hit during testing it never touches your
+            primary domain or your team's day-to-day email.</div>
+        </details>
+        <details>
+          <summary>What happens when a meeting no-shows?</summary>
+          <div class="ans">I re-book it. No-shows get counted separately from meetings
+            held in the weekly report, because held is the only number that means
+            anything — and hiding it would make the reporting useless to both of us.</div>
+        </details>
+        <details>
+          <summary>Can you work a list I already have?</summary>
+          <div class="ans">Yes, and I'll tell you honestly what shape it's in first. Most
+            in-house lists are half stale. I'd rather verify and rebuild the weak half
+            than burn a sending domain proving a point.</div>
+        </details>
+        <details>
+          <summary>Do I need a CRM already set up?</summary>
+          <div class="ans">Helpful, not required. If you have one I'll work inside it so
+            your reps see the full history. If you don't, you'll get a clean handoff
+            doc per meeting and we can talk about whether a CRM is even worth it yet.</div>
+        </details>
+        <details>
+          <!-- SWAP: replace with your actual pricing structure. -->
+          <summary>How does pricing work?</summary>
+          <div class="ans">A flat monthly retainer for the outbound work, agreed up front
+            against a target meeting volume — no per-lead pricing, because paying per
+            lead is exactly what pushes an agency to book junk. Exact numbers depend on
+            the vertical and how hard the buyer is to reach; we'll cover it on the call.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CLOSE + FORM ===================== -->
+  <section class="close inv" id="contact">
+    <div class="shell close__grid">
+      <div>
+        <h2 class="close__type" data-hero>
+          <span class="fit" data-fit>Tell me who</span>
+          <span class="fit" data-fit>you sell to.</span>
+        </h2>
+        <p class="body" style="margin-top: 1.35rem;">
+          Twenty minutes, no deck. Your ICP, what outbound you've already tried, and what
+          a real meeting is worth to you. If it's not a fit, you'll know before we hang up.
+        </p>
+      </div>
 
       <!-- SWAP: set data-endpoint to a form handler (Formspree, Web3Forms,
-           Netlify Forms) to collect submissions properly. Until then the form
-           validates, then hands off to the visitor's mail client. -->
+           Netlify Forms). Until then the form validates, then hands off to
+           the visitor's mail client so nothing is lost. -->
       <form class="form" id="lead" novalidate data-endpoint="" data-fallback="mylesdrewbiz@gmail.com">
         <div class="form__grid">
           <div class="field">
@@ -790,11 +801,6 @@ a { color: inherit; }
           <p id="done-copy">I'll come back to you the same business day with a couple of times that work.</p>
         </div>
       </form>
-
-      <div class="close__foot">
-        <!-- SWAP: replace with your business address -->
-        <a class="textlink" href="mailto:mylesdrewbiz@gmail.com" style="color: var(--inv-ink); box-shadow: inset 0 -2px 0 var(--inv-accent);">mylesdrewbiz@gmail.com</a>
-      </div>
     </div>
   </section>
 
@@ -802,47 +808,47 @@ a { color: inherit; }
 
 <footer class="foot">
   <div class="shell foot__in">
-    <span>SalesRadiant — fractional sales &amp; cold outbound</span>
+    <span>SalesRadiant — fractional sales &amp; cold lead gen</span>
+    <!-- SWAP: replace with your business address -->
+    <a href="mailto:mylesdrewbiz@gmail.com">mylesdrewbiz@gmail.com</a>
     <a href="#top">Back to top</a>
   </div>
 </footer>
+
+<script src="vendor/lenis.min.js"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/countUp.umd.js"></script>
+<script src="vendor/confetti.min.js"></script>
 
 <script>
 (function () {
   "use strict";
 
-  var root = document.documentElement;
-  root.classList.add("has-js");
-
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-  var fine   = window.matchMedia("(hover: hover) and (pointer: fine)");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var fine   = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   /* ============================================================
      1 — Fit-to-width poster type
-     Scale each line so it spans its container exactly. Measured at
-     a fixed probe size, then scaled by ratio.
      ============================================================ */
 
-  var PROBE = 200;   // px — big enough that rounding error stays small
-  var MAXPX = 190;   // ceiling so huge monitors don't get absurd type
+  var PROBE = 200;   // measure at a fixed size, then scale by ratio
+  var MAXPX = 260;   // safety rail only — scale is controlled by container width
   var lines = [].slice.call(document.querySelectorAll("[data-fit]"));
 
   function fitAll() {
     if (!lines.length) return;
-    /* Measure everything, then write — never interleave reads and
-       writes, or each line forces its own layout pass. */
+    /* Measure everything, then write. Interleaving reads and writes
+       would force a layout pass per line. */
     var sizes = lines.map(function (el) {
       var box = el.parentElement;
       var cs = getComputedStyle(box);
-      var avail = box.clientWidth
-        - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-
+      var avail = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
       el.style.fontSize = PROBE + "px";
       var w = el.scrollWidth;
       if (!w || !avail) return null;
       return Math.min(PROBE * (avail / w), MAXPX);
     });
-
     sizes.forEach(function (px, i) {
       if (px) lines[i].style.fontSize = px.toFixed(2) + "px";
       else lines[i].style.removeProperty("font-size");
@@ -854,185 +860,128 @@ a { color: inherit; }
   var fitPending;
   function scheduleFit() {
     if (fitPending) return;
-    fitPending = requestAnimationFrame(function () { fitPending = 0; fitAll(); });
+    fitPending = requestAnimationFrame(function () {
+      fitPending = 0;
+      fitAll();
+      if (window.ScrollTrigger) ScrollTrigger.refresh();
+    });
   }
 
   if ("ResizeObserver" in window && lines.length) {
     var ro = new ResizeObserver(scheduleFit);
-    document.querySelectorAll("[data-fit-group]").forEach(function (g) {
+    document.querySelectorAll("[data-hero]").forEach(function (g) {
       if (g.parentElement) ro.observe(g.parentElement);
     });
   } else {
     window.addEventListener("resize", scheduleFit);
   }
-
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleFit);
 
   /* ============================================================
-     2 — Scroll reveals  (what ScrollTrigger would do here)
+     2 — Lenis: eased scrolling
+     Desktop pointers only. Touch keeps native momentum, which beats
+     anything scripted, and reduced-motion turns it off entirely.
      ============================================================ */
 
-  var RV = ".sec__head, .row, .wont li, .split > div, .strip__names, .form";
+  var lenis = null;
 
-  [].slice.call(document.querySelectorAll(RV)).forEach(function (el) {
-    if (el.classList.contains("rv")) return;
-    el.classList.add("rv");
-    if (!el.style.getPropertyValue("--d") && el.parentElement) {
-      var sibs = [].slice.call(el.parentElement.children).filter(function (c) {
-        return c.matches && c.matches(RV);
-      });
-      var i = sibs.indexOf(el);
-      if (i > 0) el.style.setProperty("--d", (Math.min(i, 6) * 0.07) + "s");
-    }
-  });
-
-  var revealables = [].slice.call(document.querySelectorAll(".rv"));
-
-  function showAll() {
-    revealables.forEach(function (el) { el.classList.add("is-in"); });
+  if (window.Lenis && fine && !reduce) {
+    lenis = new Lenis({ duration: 1.05, smoothWheel: true, wheelMultiplier: 1, touchMultiplier: 1.6 });
+    requestAnimationFrame(function raf(t) { lenis.raf(t); requestAnimationFrame(raf); });
+    document.documentElement.style.scrollBehavior = "auto";  // don't fight Lenis
   }
 
-  if (!("IntersectionObserver" in window) || reduce.matches) {
-    showAll();
-  } else {
-    var rvIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        e.target.classList.add("is-in");
-        rvIO.unobserve(e.target);
-      });
-    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
-
-    revealables.forEach(function (el) { rvIO.observe(el); });
-  }
-
-  /* ============================================================
-     3 — Stat counters  (what CountUp.js would do here)
-     ============================================================ */
-
-  var counters = [].slice.call(document.querySelectorAll("[data-count]"));
-
-  function countAllNow() {
-    counters.forEach(function (el) {
-      el.textContent = el.getAttribute("data-count") + (el.getAttribute("data-suffix") || "");
-    });
-  }
-
-  function runCount(el) {
-    var to = parseFloat(el.getAttribute("data-count"));
-    var suffix = el.getAttribute("data-suffix") || "";
-    if (!isFinite(to)) return;
-    if (reduce.matches || to === 0) { el.textContent = to + suffix; return; }
-
-    var dur = 1500, t0 = 0;
-    el.textContent = "0" + suffix;
-
-    requestAnimationFrame(function step(now) {
-      if (!t0) t0 = now;
-      var p = Math.min((now - t0) / dur, 1);
-      var eased = 1 - Math.pow(1 - p, 4);
-      el.textContent = Math.round(eased * to) + suffix;
-      if (p < 1) requestAnimationFrame(step);
-    });
-  }
-
-  if ("IntersectionObserver" in window && !reduce.matches) {
-    var cIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        runCount(e.target);
-        cIO.unobserve(e.target);
-      });
-    }, { threshold: 0.6 });
-    counters.forEach(function (el) { cIO.observe(el); });
-  } else {
-    countAllNow();
-  }
-
-  /* ============================================================
-     4 — Eased scrolling  (what Lenis would do here)
-     Desktop pointers only, and off entirely under reduced-motion.
-     Touch keeps native momentum, which beats anything scripted.
-     ============================================================ */
-
-  function scrollableAncestor(node) {
-    while (node && node !== document.body && node.nodeType === 1) {
-      var s = getComputedStyle(node);
-      if (/(auto|scroll)/.test(s.overflowY) && node.scrollHeight > node.clientHeight + 1) return node;
-      node = node.parentNode;
-    }
-    return null;
-  }
-
-  function maxScroll() {
-    return Math.max(0, root.scrollHeight - window.innerHeight);
-  }
-
-  var target = window.scrollY, cur = target, raf = 0, driving = false;
-
-  function loop() {
-    var d = target - cur;
-    if (Math.abs(d) < 0.4) {
-      cur = target;
-      window.scrollTo(0, cur);
-      raf = 0; driving = false;
-      return;
-    }
-    cur += d * 0.135;
-    window.scrollTo(0, cur);
-    raf = requestAnimationFrame(loop);
-  }
-
-  function drive(to) {
-    target = Math.max(0, Math.min(to, maxScroll()));
-    driving = true;
-    if (!raf) raf = requestAnimationFrame(loop);
-  }
-
-  var eased = fine.matches && !reduce.matches;
-
-  if (eased) {
-    root.style.scrollBehavior = "auto";   // don't fight the lerp
-
-    window.addEventListener("wheel", function (e) {
-      if (e.ctrlKey) return;                       // pinch-zoom
-      if (scrollableAncestor(e.target)) return;    // let inner scrollers scroll
-      e.preventDefault();
-      var dy = e.deltaY;
-      if (e.deltaMode === 1) dy *= 16;             // lines  -> px
-      else if (e.deltaMode === 2) dy *= window.innerHeight;  // pages -> px
-      drive(target + dy);
-    }, { passive: false });
-
-    /* Keyboard, scrollbar drags and find-in-page all move the page
-       without us — resync so the next wheel tick starts from truth. */
-    window.addEventListener("scroll", function () {
-      if (!driving) { target = cur = window.scrollY; }
-    }, { passive: true });
-  }
-
-  /* Anchors: drive the lerp when it's on, otherwise let CSS handle it. */
+  /* Anchors: hand off to Lenis when it's running, otherwise let CSS do it. */
   document.addEventListener("click", function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
-    if (!a) return;
+    if (!a || !lenis) return;
     var href = a.getAttribute("href");
     if (!href || href.length < 2) return;
     var el = document.getElementById(href.slice(1));
     if (!el) return;
-
-    if (eased) {
-      e.preventDefault();
-      var top = el.getBoundingClientRect().top + window.scrollY;
-      if (el !== document.body) top -= 78;   // clear the sticky header
-      drive(top);
-      history.replaceState(null, "", href);
-    }
+    e.preventDefault();
+    lenis.scrollTo(el, { offset: el === document.body ? 0 : -68, duration: 1.1 });
+    history.replaceState(null, "", href);
   });
 
   /* ============================================================
+     3 — GSAP ScrollTrigger reveals
+     Entrance states are set HERE, not in CSS. If these scripts fail
+     to load, nothing is ever hidden and the page reads normally.
+     ============================================================ */
+
+  var gsapReady = window.gsap && window.ScrollTrigger && !reduce;
+
+  if (gsapReady) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (lenis) {
+      lenis.on("scroll", ScrollTrigger.update);
+      /* Lenis drives its own rAF, so stop GSAP's ticker from also
+         calling lag smoothing against a clock it doesn't control. */
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    /* Hero lines: clip up on load, staggered. */
+    document.querySelectorAll("[data-hero]").forEach(function (group) {
+      gsap.from(group.children, {
+        yPercent: 108, duration: .95, ease: "power4.out", stagger: .075,
+        scrollTrigger: { trigger: group, start: "top 92%", once: true }
+      });
+      group.style.overflow = "hidden";
+      [].forEach.call(group.children, function (c) { c.style.willChange = "transform"; });
+    });
+
+    /* Single blocks. */
+    gsap.utils.toArray("[data-reveal]").forEach(function (el) {
+      gsap.from(el, {
+        opacity: 0, y: 20, duration: .7, ease: "power3.out",
+        scrollTrigger: { trigger: el, start: "top 88%", once: true }
+      });
+    });
+
+    /* Groups whose children come in one after another. */
+    gsap.utils.toArray("[data-stagger]").forEach(function (group) {
+      gsap.from(group.children, {
+        opacity: 0, y: 20, duration: .6, ease: "power3.out", stagger: .07,
+        scrollTrigger: { trigger: group, start: "top 86%", once: true }
+      });
+    });
+  }
+
+  /* ============================================================
+     4 — CountUp on the figures
+     Final values are already in the HTML, so a missing library or a
+     skipped trigger just leaves the correct number on screen.
+     ============================================================ */
+
+  var CU = window.countUp && window.countUp.CountUp;
+
+  if (CU && !reduce) {
+    [].slice.call(document.querySelectorAll("[data-count]")).forEach(function (el) {
+      var to = parseFloat(el.getAttribute("data-count"));
+      if (!isFinite(to)) return;
+
+      var counter = new CU(el, to, {
+        suffix: el.getAttribute("data-suffix") || "",
+        duration: 1.9,
+        useEasing: true
+      });
+      if (counter.error) return;
+
+      if (window.ScrollTrigger) {
+        ScrollTrigger.create({
+          trigger: el, start: "top 88%", once: true,
+          onEnter: function () { counter.start(); }
+        });
+      } else {
+        counter.start();
+      }
+    });
+  }
+
+  /* ============================================================
      5 — Lead form
-     Validates locally, then POSTs if an endpoint is configured.
-     With none set it composes a mail draft so nothing is lost.
      ============================================================ */
 
   var form = document.getElementById("lead");
@@ -1058,20 +1007,30 @@ a { color: inherit; }
     el.addEventListener("blur", function () {
       if (el.value.trim() !== "" || el.getAttribute("aria-invalid") === "true") validate(el);
     });
-    /* Once a field is marked bad, re-check as they type so the error
-       clears the moment it's fixed rather than on the next blur. */
+    /* Once a field is flagged, re-check as they type so the error clears
+       the moment it's fixed rather than on the next blur. */
     el.addEventListener("input", function () {
       if (el.getAttribute("aria-invalid") === "true") validate(el);
     });
   });
 
-  var finish = function (msg) {
+  function celebrate() {
+    if (!window.confetti || reduce) return;
+    var opts = { particleCount: 70, spread: 68, startVelocity: 38, ticks: 160, disableForReducedMotion: true };
+    var blue = ["#1B3CF5", "#7C93FF", "#FFFFFF"];
+    window.confetti(Object.assign({}, opts, { origin: { x: .25, y: .72 }, angle: 70, colors: blue }));
+    window.confetti(Object.assign({}, opts, { origin: { x: .75, y: .72 }, angle: 110, colors: blue }));
+  }
+
+  function finish(msg) {
     if (msg) document.getElementById("done-copy").textContent = msg;
     form.classList.add("is-done");
     var panel = form.querySelector(".form__done");
     panel.setAttribute("tabindex", "-1");
     panel.focus();
-  };
+    celebrate();
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  }
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -1106,7 +1065,7 @@ a { color: inherit; }
       return;
     }
 
-    /* No endpoint wired yet. */
+    /* No endpoint wired yet — compose a draft so nothing is lost. */
     var to = form.getAttribute("data-fallback");
     var body = "Name: " + data.name +
              "\nCompany: " + data.company +
