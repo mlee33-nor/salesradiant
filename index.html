@@ -1,0 +1,1118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SalesRadiant — Fractional Sales &amp; Outbound</title>
+<meta name="description" content="Fractional sales and cold outbound for mid-market and early-stage B2B. 400+ meetings booked by cold email and cold call for teams like ChurnZero, Barrett Financial, and AMI Strategies." />
+<meta property="og:title" content="SalesRadiant — Fractional Sales &amp; Outbound" />
+<meta property="og:description" content="I book meetings with people who don't take meetings. 400+ and counting." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230E1116'/%3E%3Cg stroke='%23F0A62B' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M8 8v16M14 8v16M20 8v16M26 8v16'/%3E%3C/g%3E%3C/svg%3E" />
+
+<style>
+/* ============================================================
+   SalesRadiant — single-file site
+   Tokens first. Every color used by a component comes from a
+   token so all three theme states resolve as a complete set:
+     :root                                  -> light (default)
+     prefers-color-scheme: dark (unstamped) -> dark
+     [data-theme] stamped                   -> explicit override
+   ============================================================ */
+
+:root {
+  --ground:      #EDEEF0;
+  --ground-deep: #E3E5E9;
+  --surface:     #F8F9FA;
+  --surface-alt: #FFFFFF;
+  --ink:         #14181D;
+  --ink-mid:     #3D454F;
+  --ink-soft:    #5A626C;
+  --ink-faint:   #8A929C;
+  --rule:        #D3D7DC;
+  --rule-strong: #B9BFC7;
+  --accent:      #C77A0A;
+  --accent-deep: #A05F02;
+  --accent-wash: rgba(199, 122, 10, 0.10);
+  --band-ground: #14181D;
+  --band-ink:    #F0F1F3;
+  --band-soft:   #9AA2AD;
+  --band-rule:   #2A313A;
+  --band-accent: #F0A62B;
+  --shadow:      0 1px 2px rgba(20, 24, 29, .05), 0 8px 24px -12px rgba(20, 24, 29, .18);
+  --focus:       #C77A0A;
+
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "Cascadia Mono", "SF Mono", "Segoe UI Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  --rail: 8.25rem;
+  --gutter: 2.5rem;
+  --maxw: 71rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:      #0E1116;
+    --ground-deep: #090C10;
+    --surface:     #161B22;
+    --surface-alt: #1B212A;
+    --ink:         #E8EAED;
+    --ink-mid:     #B7BEC7;
+    --ink-soft:    #939BA6;
+    --ink-faint:   #6C747F;
+    --rule:        #262C35;
+    --rule-strong: #333B45;
+    --accent:      #F0A62B;
+    --accent-deep: #FFC15C;
+    --accent-wash: rgba(240, 166, 43, 0.12);
+    --band-ground: #060809;
+    --band-ink:    #E8EAED;
+    --band-soft:   #8A929C;
+    --band-rule:   #1D232B;
+    --band-accent: #F0A62B;
+    --shadow:      0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -12px rgba(0, 0, 0, .7);
+    --focus:       #F0A62B;
+  }
+}
+
+:root[data-theme="dark"] {
+  --ground:      #0E1116;
+  --ground-deep: #090C10;
+  --surface:     #161B22;
+  --surface-alt: #1B212A;
+  --ink:         #E8EAED;
+  --ink-mid:     #B7BEC7;
+  --ink-soft:    #939BA6;
+  --ink-faint:   #6C747F;
+  --rule:        #262C35;
+  --rule-strong: #333B45;
+  --accent:      #F0A62B;
+  --accent-deep: #FFC15C;
+  --accent-wash: rgba(240, 166, 43, 0.12);
+  --band-ground: #060809;
+  --band-ink:    #E8EAED;
+  --band-soft:   #8A929C;
+  --band-rule:   #1D232B;
+  --band-accent: #F0A62B;
+  --shadow:      0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -12px rgba(0, 0, 0, .7);
+  --focus:       #F0A62B;
+}
+
+/* ---------- base ---------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, p, ul, ol, figure, dl { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection { background: var(--accent-wash); color: var(--ink); }
+
+/* ---------- layout primitives ---------- */
+
+.wrap {
+  width: min(100% - 2.5rem, var(--maxw));
+  margin-inline: auto;
+}
+
+.spine {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  column-gap: var(--gutter);
+}
+
+.spine__rail {
+  border-top: 1px solid var(--rule-strong);
+  padding-top: .75rem;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  align-self: start;
+  position: sticky;
+  top: 2rem;
+}
+
+.spine__main {
+  border-top: 1px solid var(--rule-strong);
+  padding-top: .75rem;
+  min-width: 0;
+}
+
+.rail__idx,
+.rail__label {
+  font-family: var(--mono);
+  font-size: .6875rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+.rail__idx { color: var(--accent); font-weight: 600; }
+.rail__label { color: var(--ink-faint); }
+
+@media (max-width: 60rem) {
+  .spine { grid-template-columns: minmax(0, 1fr); row-gap: .25rem; }
+  .spine__rail { position: static; flex-direction: row; gap: .75rem; align-items: baseline; padding-bottom: .1rem; }
+  .spine__main { border-top: 0; padding-top: 0; }
+}
+
+/* ---------- type ---------- */
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: .6875rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.h-display {
+  font-size: clamp(2.4rem, 6.4vw, 4.35rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+
+.h-section {
+  font-size: clamp(1.65rem, 3.4vw, 2.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.028em;
+  font-weight: 750;
+  text-wrap: balance;
+}
+
+.h-item {
+  font-size: 1.0625rem;
+  line-height: 1.35;
+  letter-spacing: -0.012em;
+  font-weight: 700;
+}
+
+.lede {
+  font-size: clamp(1.0625rem, 1.6vw, 1.1875rem);
+  line-height: 1.62;
+  color: var(--ink-mid);
+  max-width: 40ch;
+}
+
+.prose { color: var(--ink-soft); max-width: 62ch; }
+
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+/* ---------- header ---------- */
+
+.masthead {
+  position: relative;
+  z-index: 20;
+  padding-block: 1.5rem 0;
+}
+
+.masthead__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.mark {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: .9375rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.mark__glyph { display: block; width: 1.15rem; height: 1.15rem; color: var(--accent); }
+.mark__thin { color: var(--ink-faint); font-weight: 500; }
+
+.masthead__nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navlink {
+  font-family: var(--mono);
+  font-size: .75rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding-block: .35rem;
+  border-bottom: 1px solid transparent;
+  transition: color .16s ease, border-color .16s ease;
+}
+.navlink:hover { color: var(--ink); border-bottom-color: var(--accent); }
+
+@media (max-width: 46rem) {
+  .masthead__nav .navlink { display: none; }
+  .masthead__nav .btn { display: inline-flex; }
+}
+
+/* ---------- buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: var(--mono);
+  font-size: .8125rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  text-decoration: none;
+  padding: .7rem 1.15rem;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease, transform .16s ease;
+}
+.btn:active { transform: translateY(1px); }
+
+.btn--solid { background: var(--accent); color: #FFFFFF; border-color: var(--accent); }
+.btn--solid:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+
+.btn--ghost { color: var(--ink); border-color: var(--rule-strong); background: transparent; }
+.btn--ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+.btn--onband { background: var(--band-accent); color: #14181D; border-color: var(--band-accent); }
+.btn--onband:hover { background: #FFC15C; border-color: #FFC15C; }
+
+.btn--onband-ghost { color: var(--band-ink); border-color: var(--band-rule); background: transparent; }
+.btn--onband-ghost:hover { border-color: var(--band-accent); color: var(--band-accent); }
+
+.btn--sm { padding: .5rem .85rem; font-size: .75rem; }
+
+/* ---------- hero ---------- */
+
+.hero { padding-block: clamp(3.5rem, 8vw, 6rem) clamp(2.5rem, 5vw, 3.75rem); }
+
+.hero__grid {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  column-gap: var(--gutter);
+}
+@media (max-width: 60rem) { .hero__grid { grid-template-columns: minmax(0, 1fr); } }
+
+.hero__stamp {
+  font-family: var(--mono);
+  font-size: .6875rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  line-height: 1.6;
+  padding-top: .5rem;
+}
+.hero__stamp b { display: block; color: var(--accent); font-weight: 600; }
+@media (max-width: 60rem) { .hero__stamp { padding-top: 0; padding-bottom: 1.5rem; } }
+
+.hero__body { display: flex; flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+
+.hero h1 .accent { color: var(--accent); }
+
+/* ---------- tally panel ---------- */
+
+.tally {
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.tally__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .5rem 1.5rem;
+  padding: .7rem 1.1rem;
+  border-bottom: 1px solid var(--rule);
+  background: var(--surface-alt);
+  font-family: var(--mono);
+  font-size: .6875rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.tally__head b { color: var(--ink-mid); font-weight: 600; }
+
+.tally__canvas { display: block; width: 100%; padding: 1.1rem; }
+
+.tally__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem 1.5rem;
+  padding: .7rem 1.1rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: .6875rem;
+  letter-spacing: .06em;
+  color: var(--ink-faint);
+}
+.key { display: inline-flex; align-items: center; gap: .45rem; }
+.key::before {
+  content: "";
+  width: 2px; height: .85rem;
+  background: currentColor;
+  flex: none;
+}
+.key--ink { color: var(--ink-soft); }
+.key--accent { color: var(--accent); }
+
+/* ---------- proof band ---------- */
+
+.band {
+  background: var(--band-ground);
+  color: var(--band-ink);
+  padding-block: clamp(3rem, 6vw, 4.5rem);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--band-rule);
+  border: 1px solid var(--band-rule);
+}
+@media (max-width: 56rem) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.stat {
+  background: var(--band-ground);
+  padding: 1.5rem 1.35rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+.stat__num {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: clamp(2.1rem, 4.6vw, 2.9rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--band-accent);
+}
+.stat__label { font-size: .9375rem; line-height: 1.4; font-weight: 600; color: var(--band-ink); }
+.stat__note { font-family: var(--mono); font-size: .6875rem; letter-spacing: .06em; color: var(--band-soft); line-height: 1.5; }
+
+.band__note {
+  margin-top: 1.5rem;
+  font-family: var(--mono);
+  font-size: .75rem;
+  letter-spacing: .04em;
+  color: var(--band-soft);
+  max-width: 60ch;
+}
+
+/* ---------- generic section ---------- */
+
+.section { padding-block: clamp(3.5rem, 7vw, 5.5rem); }
+.section--tight { padding-block: clamp(2.75rem, 5vw, 4rem); }
+.section--alt { background: var(--ground-deep); }
+
+.section__head { display: flex; flex-direction: column; gap: .9rem; margin-bottom: 2.75rem; }
+.section__head .prose { max-width: 54ch; }
+
+/* ---------- services ---------- */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  overflow: hidden;
+}
+@media (max-width: 52rem) { .cards { grid-template-columns: minmax(0, 1fr); } }
+
+.card {
+  background: var(--surface);
+  padding: 1.6rem 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+  transition: background-color .18s ease;
+}
+.card:hover { background: var(--surface-alt); }
+
+.card__tag {
+  font-family: var(--mono);
+  font-size: .625rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+.card__body { font-size: .9375rem; line-height: 1.62; color: var(--ink-soft); }
+.card__body strong { color: var(--ink-mid); font-weight: 600; }
+
+/* ---------- process (ordered — the numbering is real) ---------- */
+
+.steps { display: flex; flex-direction: column; }
+
+.step {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  column-gap: 1.5rem;
+  padding-block: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+.step:last-child { border-bottom: 1px solid var(--rule); }
+
+.step__n {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: .8125rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: var(--accent);
+  padding-top: .15rem;
+}
+.step__text { display: flex; flex-direction: column; gap: .4rem; }
+.step__text p { font-size: .9375rem; line-height: 1.62; color: var(--ink-soft); max-width: 58ch; }
+
+@media (max-width: 40rem) {
+  .step { grid-template-columns: minmax(0, 1fr); row-gap: .5rem; }
+}
+
+/* ---------- clients ---------- */
+
+.clients {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border-block: 1px solid var(--rule);
+}
+@media (max-width: 46rem) { .clients { grid-template-columns: minmax(0, 1fr); } }
+
+.client {
+  background: var(--ground);
+  padding: 1.4rem 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+}
+.section--alt .client { background: var(--ground-deep); }
+.client__name { font-size: 1.125rem; font-weight: 750; letter-spacing: -0.02em; line-height: 1.2; }
+.client__meta { font-family: var(--mono); font-size: .6875rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
+
+/* ---------- fit ---------- */
+
+.fit {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem;
+}
+@media (max-width: 48rem) { .fit { grid-template-columns: minmax(0, 1fr); gap: 2rem; } }
+
+.fit__col { display: flex; flex-direction: column; gap: 1rem; }
+
+.fit__title {
+  font-family: var(--mono);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding-bottom: .7rem;
+  border-bottom: 2px solid currentColor;
+}
+.fit__title--yes { color: var(--accent); }
+.fit__title--no { color: var(--ink-faint); }
+
+.fit__list { display: flex; flex-direction: column; gap: .8rem; }
+.fit__list li {
+  display: grid;
+  grid-template-columns: 1.1rem minmax(0, 1fr);
+  column-gap: .65rem;
+  font-size: .9375rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.fit__list li::before {
+  font-family: var(--mono);
+  font-size: .8125rem;
+  line-height: 1.75;
+  color: var(--ink-faint);
+}
+.fit__list--yes li::before { content: "+"; color: var(--accent); }
+.fit__list--no li::before { content: "\2013"; }
+
+/* ---------- closing CTA ---------- */
+
+.close { padding-block: clamp(3.5rem, 7vw, 5.5rem); }
+
+.close__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  align-items: flex-start;
+  max-width: 46ch;
+}
+
+.contact {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--band-rule);
+  border: 1px solid var(--band-rule);
+}
+@media (max-width: 46rem) { .contact { grid-template-columns: minmax(0, 1fr); } }
+
+.contact__cell {
+  background: var(--band-ground);
+  padding: 1.15rem 1.25rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+}
+.contact__k { font-family: var(--mono); font-size: .625rem; letter-spacing: .14em; text-transform: uppercase; color: var(--band-soft); }
+.contact__v { font-family: var(--mono); font-size: .9375rem; color: var(--band-ink); text-decoration: none; word-break: break-word; border-bottom: 1px solid transparent; align-self: flex-start; transition: color .16s ease, border-color .16s ease; }
+a.contact__v:hover { color: var(--band-accent); border-bottom-color: var(--band-accent); }
+
+/* ---------- footer ---------- */
+
+.footer {
+  border-top: 1px solid var(--rule);
+  padding-block: 2rem 2.75rem;
+}
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .75rem 2rem;
+  font-family: var(--mono);
+  font-size: .6875rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.footer__inner a { text-decoration: none; border-bottom: 1px solid var(--rule-strong); }
+.footer__inner a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+</style>
+</head>
+
+<body>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="mark" href="#top">
+      <svg class="mark__glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+        <path d="M4 4v16M10 4v16M16 4v16M22 4v16" />
+      </svg>
+      <span>Sales<span class="mark__thin">Radiant</span></span>
+    </a>
+    <nav class="masthead__nav" aria-label="Primary">
+      <a class="navlink" href="#work">What I run</a>
+      <a class="navlink" href="#process">Process</a>
+      <a class="navlink" href="#clients">Clients</a>
+      <a class="btn btn--ghost btn--sm" href="#contact">Book a call</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__stamp">
+        <b>Fractional sales</b>
+        Cold email<br />&amp; cold calling<br />
+        Mid-market<br />&amp; early-stage
+      </div>
+
+      <div class="hero__body">
+        <p class="eyebrow">Outbound that ends in a calendar invite</p>
+        <h1 class="h-display">I book meetings with people who <span class="accent">don't take meetings.</span></h1>
+        <p class="lede">
+          SalesRadiant is fractional sales for mid-market and early-stage B2B companies.
+          Cold email and cold calls, run by an operator who has booked 400+ meetings for
+          teams like ChurnZero, Barrett Financial, and AMI Strategies.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--solid" href="#contact">Book a 20-minute call</a>
+          <a class="btn btn--ghost" href="#process">See how it works</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <figure class="tally">
+        <figcaption class="tally__head">
+          <span>Meetings booked <b>&mdash; running total</b></span>
+          <span>Sourced cold &middot; email + phone</span>
+        </figcaption>
+        <canvas id="tally" class="tally__canvas" role="img"
+                aria-label="A hand-tally of 407 marks in groups of five, one mark for every meeting booked. The final row is unfinished."></canvas>
+        <div class="tally__foot">
+          <span class="key key--ink">One mark = one meeting booked</span>
+          <span class="key key--accent">Booked this quarter</span>
+          <span>Last row left open on purpose</span>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================== PROOF BAND ===================== -->
+  <section class="band" aria-label="By the numbers">
+    <div class="wrap">
+      <div class="stats">
+        <div class="stat">
+          <span class="stat__num">400+</span>
+          <span class="stat__label">Meetings booked</span>
+          <span class="stat__note">Every one sourced cold</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">3</span>
+          <span class="stat__label">Industries sold into</span>
+          <span class="stat__note">SaaS &middot; Lending &middot; Telecom expense</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">2</span>
+          <span class="stat__label">Channels worked daily</span>
+          <span class="stat__note">The inbox and the phone</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">0</span>
+          <span class="stat__label">Headcount you add</span>
+          <span class="stat__note">Fractional, not a hire</span>
+        </div>
+      </div>
+      <p class="band__note">
+        No purchased lists, no dashboard of open rates. The deliverable is a meeting on
+        your calendar with a qualified buyer, and notes on why they agreed to take it.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== WHAT I RUN ===================== -->
+  <section class="section" id="work">
+    <div class="wrap spine">
+      <div class="spine__rail">
+        <span class="rail__idx">01</span>
+        <span class="rail__label">What I run</span>
+      </div>
+      <div class="spine__main">
+        <div class="section__head">
+          <h2 class="h-section">Outbound is a job, not a tool.</h2>
+          <p class="prose">
+            Most teams already own the software. What they're missing is somebody who
+            gets on the phone every day and writes the email that actually gets answered.
+            That's the part I do.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <span class="card__tag">Channel</span>
+            <h3 class="h-item">Cold email, end to end</h3>
+            <p class="card__body">
+              ICP definition, list build, domain and inbox setup, deliverability, sequence
+              copy, and reply handling. <strong>You get replies, not open rates.</strong>
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card__tag">Channel</span>
+            <h3 class="h-item">Cold calling</h3>
+            <p class="card__body">
+              Dials every day, into real gatekeepers and real objections. A live
+              conversation surfaces timing and budget that no email sequence will,
+              <strong>and it does it in four minutes.</strong>
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card__tag">Operating</span>
+            <h3 class="h-item">Fractional sales leadership</h3>
+            <p class="card__body">
+              Pipeline structure, CRM hygiene, follow-up cadence, and a handoff
+              <strong>your AEs will actually accept</strong> instead of quietly ignoring.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="card__tag">Deliverable</span>
+            <h3 class="h-item">Qualified meetings</h3>
+            <p class="card__body">
+              Each meeting arrives with context: why they took the call, what they're
+              trying to fix, and <strong>who else needs to be in the room</strong> to sign.
+            </p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROCESS ===================== -->
+  <section class="section section--alt" id="process">
+    <div class="wrap spine">
+      <div class="spine__rail">
+        <span class="rail__idx">02</span>
+        <span class="rail__label">Process</span>
+      </div>
+      <div class="spine__main">
+        <div class="section__head">
+          <h2 class="h-section">Five steps, in order, every account.</h2>
+          <p class="prose">
+            Nothing here is proprietary. It's just done consistently, which is the part
+            most teams can't sustain while also closing deals.
+          </p>
+        </div>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step__n">01</span>
+            <div class="step__text">
+              <h3 class="h-item">Agree on who counts</h3>
+              <p>Titles, company size, tech stack, trigger events. We settle what a
+                 qualified meeting means before I make a single dial &mdash; so nobody
+                 argues about lead quality in week three.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step__n">02</span>
+            <div class="step__text">
+              <h3 class="h-item">Build the list by hand</h3>
+              <p>Sourced and verified account by account. Bulk scraped lists burn your
+                 sending domain and waste the calls &mdash; they don't get used here.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step__n">03</span>
+            <div class="step__text">
+              <h3 class="h-item">Work both channels at once</h3>
+              <p>Email sequences run while I'm on the phone against the same account list.
+                 Whichever channel they answer, there's a person on the other end who
+                 knows their business.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step__n">04</span>
+            <div class="step__text">
+              <h3 class="h-item">Qualify live</h3>
+              <p>Problem, timing, budget, and decision process confirmed in conversation
+                 &mdash; not inferred from a form fill. If it doesn't hold up, it doesn't
+                 get booked.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step__n">05</span>
+            <div class="step__text">
+              <h3 class="h-item">Hand it off clean</h3>
+              <p>The meeting lands on your rep's calendar with notes attached. They show
+                 up, they sell. Weekly report on dials, replies, meetings set, and
+                 meetings held.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CLIENTS ===================== -->
+  <section class="section" id="clients">
+    <div class="wrap spine">
+      <div class="spine__rail">
+        <span class="rail__idx">03</span>
+        <span class="rail__label">Track record</span>
+      </div>
+      <div class="spine__main">
+        <div class="section__head">
+          <h2 class="h-section">Where I've done the work.</h2>
+          <p class="prose">
+            Three very different buyers &mdash; a SaaS platform team, a mortgage branch,
+            and an enterprise cost-reduction firm. The script changes completely. The
+            discipline doesn't.
+          </p>
+        </div>
+
+        <div class="clients">
+          <div class="client">
+            <span class="client__name">ChurnZero</span>
+            <span class="client__meta">B2B SaaS &middot; Customer success</span>
+          </div>
+          <div class="client">
+            <span class="client__name">Barrett Financial</span>
+            <span class="client__meta">Mortgage &amp; lending</span>
+          </div>
+          <div class="client">
+            <span class="client__name">AMI Strategies</span>
+            <span class="client__meta">Telecom expense management</span>
+          </div>
+        </div>
+
+        <p class="prose" style="margin-top: 1.5rem;">
+          Plus early-stage teams making their first outbound push, where the job is
+          proving the channel works before anyone commits to hiring an SDR.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FIT ===================== -->
+  <section class="section section--alt">
+    <div class="wrap spine">
+      <div class="spine__rail">
+        <span class="rail__idx">04</span>
+        <span class="rail__label">Fit</span>
+      </div>
+      <div class="spine__main">
+        <div class="section__head">
+          <h2 class="h-section">Worth a conversation, or worth skipping.</h2>
+          <p class="prose">
+            I'd rather tell you no in the first call than three months in. Here's the
+            honest split.
+          </p>
+        </div>
+
+        <div class="fit">
+          <div class="fit__col">
+            <h3 class="fit__title fit__title--yes">Good fit</h3>
+            <ul class="fit__list fit__list--yes">
+              <li>You sell B2B at a deal size that justifies a human conversation.</li>
+              <li>You have a product and paying customers, but no consistent outbound motion.</li>
+              <li>Your closers are strong and simply short on meetings.</li>
+              <li>You need pipeline this quarter, not a six-week hiring process.</li>
+              <li>You can give me 30 minutes a week for feedback on the calls.</li>
+            </ul>
+          </div>
+          <div class="fit__col">
+            <h3 class="fit__title fit__title--no">Probably not</h3>
+            <ul class="fit__list fit__list--no">
+              <li>You want a bulk list of scraped contacts to blast yourself.</li>
+              <li>You're selling B2C or transactional low-ticket.</li>
+              <li>Volume matters more to you than fit.</li>
+              <li>Nobody internally can take a meeting within two weeks of it being set.</li>
+              <li>You want leads with no input on who they are.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CLOSING CTA ===================== -->
+  <section class="band close" id="contact">
+    <div class="wrap">
+      <div class="close__inner">
+        <p class="eyebrow" style="color: var(--band-accent);">Next step</p>
+        <h2 class="h-section">Tell me who you sell to. I'll tell you whether I can fill your calendar.</h2>
+        <p style="color: var(--band-soft); max-width: 48ch; line-height: 1.62;">
+          Twenty minutes, no deck. We'll cover your ICP, what outbound you've already
+          tried, and what a qualified meeting is actually worth to you. If it's not a
+          fit, you'll know by the end of the call.
+        </p>
+        <div class="hero__actions">
+          <!-- SWAP: point href at your scheduling link (Calendly, Cal.com, HubSpot) -->
+          <a class="btn btn--onband" href="mailto:mylesdrewbiz@gmail.com?subject=SalesRadiant%20%E2%80%94%20intro%20call">Book a 20-minute call</a>
+          <a class="btn btn--onband-ghost" href="mailto:mylesdrewbiz@gmail.com">Send an email instead</a>
+        </div>
+      </div>
+
+      <div class="contact">
+        <div class="contact__cell">
+          <span class="contact__k">Email</span>
+          <!-- SWAP: replace with your business address, e.g. myles@salesradiant.com -->
+          <a class="contact__v" href="mailto:mylesdrewbiz@gmail.com">mylesdrewbiz@gmail.com</a>
+        </div>
+        <div class="contact__cell">
+          <span class="contact__k">Phone</span>
+          <!-- SWAP: add your number, or delete this cell -->
+          <span class="contact__v">Available on request</span>
+        </div>
+        <div class="contact__cell">
+          <span class="contact__k">Response time</span>
+          <span class="contact__v">Same business day</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <span>SalesRadiant &mdash; Fractional sales &amp; outbound</span>
+    <span>Cold email &middot; Cold calling &middot; Pipeline</span>
+    <a href="#top">Back to top</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var canvas = document.getElementById("tally");
+  if (!canvas || !canvas.getContext) return;
+
+  var ctx = canvas.getContext("2d");
+
+  /* 407 marks: 81 full groups of five, plus a 2-mark opening group.
+     The last 7 marks (final full group + the 2 stragglers) read in accent. */
+  var TOTAL_GROUPS = 82;      // 81 complete + 1 partial
+  var PARTIAL_LAST = 2;       // marks in the final group
+  var ACCENT_FROM  = 80;      // group index where the accent takes over (0-based)
+
+  var PITCH_X = 46, PITCH_Y = 52, PAD = 4;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  var cols = 1, rows = 1, cssW = 0, cssH = 0, drawn = 0, raf = 0, start = 0;
+
+  function tokens() {
+    var s = getComputedStyle(document.documentElement);
+    return {
+      ink: s.getPropertyValue("--ink-soft").trim() || "#5A626C",
+      hot: s.getPropertyValue("--accent").trim() || "#C77A0A"
+    };
+  }
+
+  /* One tally group: n vertical strokes, plus a diagonal slash when n === 5. */
+  function group(x, y, n, seed) {
+    var h = 30, gap = 6.6;
+    var jitter = function (k) { return (((seed * 37 + k * 17) % 11) - 5) / 12; };
+    var i, bars = Math.min(n, 4);
+
+    for (i = 0; i < bars; i++) {
+      var bx = x + i * gap + jitter(i);
+      ctx.beginPath();
+      ctx.moveTo(bx, y + jitter(i + 5));
+      ctx.lineTo(bx + jitter(i + 9) * 1.6, y + h + jitter(i + 3));
+      ctx.stroke();
+    }
+    if (n >= 5) {
+      ctx.beginPath();
+      ctx.moveTo(x - 3.5, y + h - 2 + jitter(2));
+      ctx.lineTo(x + 3 * gap + 4, y + 2 + jitter(6));
+      ctx.stroke();
+    }
+  }
+
+  function paint(count) {
+    var c = tokens();
+    ctx.clearRect(0, 0, cssW, cssH);
+    ctx.lineWidth = 2.1;
+    ctx.lineCap = "round";
+
+    for (var g = 0; g < count; g++) {
+      var col = g % cols, row = Math.floor(g / cols);
+      var x = PAD + col * PITCH_X;
+      var y = PAD + row * PITCH_Y;
+      var n = (g === TOTAL_GROUPS - 1) ? PARTIAL_LAST : 5;
+
+      ctx.strokeStyle = (g >= ACCENT_FROM) ? c.hot : c.ink;
+      ctx.globalAlpha = (g >= ACCENT_FROM) ? 1 : 0.82;
+      group(x, y, n, g);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function layout() {
+    var box = canvas.parentElement;
+    var style = getComputedStyle(canvas);
+    var inner = box.clientWidth
+      - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+
+    cols = Math.max(6, Math.floor((inner - PAD * 2 + (PITCH_X - 34)) / PITCH_X));
+    rows = Math.ceil(TOTAL_GROUPS / cols);
+
+    cssW = inner;
+    cssH = rows * PITCH_Y + PAD * 2 - (PITCH_Y - 34);
+
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    canvas.style.height = cssH + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function tick(now) {
+    if (!start) start = now;
+    var p = Math.min((now - start) / 1300, 1);
+    var eased = 1 - Math.pow(1 - p, 2);
+    drawn = Math.round(eased * TOTAL_GROUPS);
+    paint(drawn);
+    if (p < 1) raf = requestAnimationFrame(tick);
+    else raf = 0;
+  }
+
+  function render(animate) {
+    layout();
+    if (raf) { cancelAnimationFrame(raf); raf = 0; }
+    if (animate && !reduce.matches) {
+      start = 0;
+      raf = requestAnimationFrame(tick);
+    } else {
+      drawn = TOTAL_GROUPS;
+      paint(TOTAL_GROUPS);
+    }
+  }
+
+  /* Draw on first sight rather than immediately, so the count lands when seen. */
+  var seen = false;
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && !seen) { seen = true; render(true); io.disconnect(); }
+      });
+    }, { threshold: 0.15 });
+    io.observe(canvas);
+    render(false);
+    drawn = 0;
+    ctx.clearRect(0, 0, cssW, cssH);
+  } else {
+    seen = true;
+    render(true);
+  }
+
+  var t;
+  window.addEventListener("resize", function () {
+    clearTimeout(t);
+    t = setTimeout(function () { render(false); }, 140);
+  });
+
+  /* Repaint on any theme change: OS-level, or an explicit data-theme stamp. */
+  var dark = window.matchMedia("(prefers-color-scheme: dark)");
+  var repaint = function () { if (seen) paint(drawn || TOTAL_GROUPS); };
+  if (dark.addEventListener) dark.addEventListener("change", repaint);
+  else if (dark.addListener) dark.addListener(repaint);
+
+  new MutationObserver(repaint).observe(document.documentElement, {
+    attributes: true, attributeFilter: ["data-theme", "class", "style"]
+  });
+})();
+</script>
+
+</body>
+</html>
