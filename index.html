@@ -290,12 +290,31 @@ a { color: inherit; }
 /* ---------- rows ---------- */
 
 .rows { display: flex; flex-direction: column; }
-.row { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: .6rem 1.75rem; padding-block: clamp(1.15rem, 2.2vw, 1.6rem); border-top: 1px solid var(--rule); }
+
+/* Number, heading, body across three columns — the heading and its copy
+   sit side by side so a row fills the width instead of stacking in the
+   left third. */
+.row {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, .82fr) minmax(0, 1.18fr);
+  gap: .45rem clamp(1.5rem, 3vw, 2.75rem);
+  padding-block: clamp(1.15rem, 2.2vw, 1.6rem);
+  border-top: 1px solid var(--rule);
+  align-items: start;
+}
 .row:last-child { border-bottom: 1px solid var(--rule); }
-.row__n { font-size: .8125rem; font-weight: 800; letter-spacing: .04em; color: var(--accent); padding-top: .35em; }
-.row__b { display: flex; flex-direction: column; gap: .4rem; }
-.row__b p { color: var(--ink-mid); max-width: 60ch; font-size: .9375rem; }
-@media (max-width: 40rem) { .row { grid-template-columns: minmax(0, 1fr); gap: .35rem; } .row__n { padding-top: 0; } }
+.row__n { font-size: .8125rem; font-weight: 800; letter-spacing: .04em; color: var(--accent); padding-top: .3em; }
+.row p { color: var(--ink-mid); max-width: 52ch; font-size: .9375rem; }
+
+@media (max-width: 52rem) {
+  .row { grid-template-columns: 2.5rem minmax(0, 1fr); }
+  .row p { grid-column: 2; max-width: 58ch; }
+}
+@media (max-width: 40rem) {
+  .row { grid-template-columns: minmax(0, 1fr); gap: .35rem; }
+  .row p { grid-column: 1; }
+  .row__n { padding-top: 0; }
+}
 
 /* ---------- industries ---------- */
 
@@ -318,7 +337,7 @@ a { color: inherit; }
 
 .inv { background: var(--inv-ground); color: var(--inv-ink); }
 .inv .kicker { color: var(--inv-accent); }
-.inv .body, .inv .row__b p { color: var(--inv-mid); }
+.inv .body, .inv .row p { color: var(--inv-mid); }
 .inv .small { color: var(--inv-soft); }
 .inv .row, .inv .row:last-child { border-color: var(--inv-rule); }
 .inv .row__n { color: var(--inv-accent); }
@@ -505,46 +524,43 @@ a { color: inherit; }
         <span class="kicker">What I do</span>
         <h2 class="h2">You don't have a tool problem.</h2>
         <p class="body">
-          You already own the sequencer, the dialer, and the data provider. What's
-          missing is someone who picks up the phone every morning and writes the
-          email that actually gets answered. That's the whole job.
+          You already pay for the sequencer, the dialer, and the data. None of it
+          books a meeting on its own. The missing piece is someone doing the work
+          every single day — which is the entire job, and the part everyone quits.
         </p>
       </div>
 
       <ol class="rows" data-stagger>
         <li class="row">
           <span class="row__n">01</span>
-          <div class="row__b">
-            <h3 class="h3">Cold calls, every day</h3>
-            <p>Real dials into real gatekeepers — not a "call block" that keeps getting
-               moved. Four minutes on the phone surfaces timing and budget that no
-               email sequence ever will.</p>
-          </div>
+          <h3 class="h3">I actually pick up the phone</h3>
+          <p>For most teams, "calling" is a block on the calendar that keeps getting
+             moved to tomorrow. Mine doesn't move. Four minutes with a live person
+             tells you more about their timing and budget than a month of watching
+             who opened what.</p>
         </li>
         <li class="row">
           <span class="row__n">02</span>
-          <div class="row__b">
-            <h3 class="h3">Email written per account</h3>
-            <p>Domains, inboxes, deliverability, and copy. If a message could go to a
-               thousand companies without changing a word, it doesn't go out.</p>
-          </div>
+          <h3 class="h3">I write to one company at a time</h3>
+          <p>I handle the boring half too — sending domains, inbox setup,
+             deliverability — then write like someone who actually looked them up.
+             If the email would still make sense sent to a thousand other companies,
+             it doesn't go out.</p>
         </li>
         <li class="row">
           <span class="row__n">03</span>
-          <div class="row__b">
-            <h3 class="h3">Qualifying, out loud</h3>
-            <p>Problem, timing, budget, and who else signs — confirmed on the call, not
-               guessed from a form fill. Half the value here is the meetings I
-               <em>don't</em> book.</p>
-          </div>
+          <h3 class="h3">I ask the awkward questions early</h3>
+          <p>What's actually broken, when they need it fixed, what they can spend,
+             and who else has to sign. Asked on the call, out loud — not guessed from
+             a form. The meetings I turn down are worth as much to you as the ones
+             I book.</p>
         </li>
         <li class="row">
           <span class="row__n">04</span>
-          <div class="row__b">
-            <h3 class="h3">A handoff that sticks</h3>
-            <p>Your rep opens the invite already knowing the story: why they took it,
-               what they're fixing, who else is in the room. No cold restarts.</p>
-          </div>
+          <h3 class="h3">Your rep walks in warm</h3>
+          <p>Every meeting arrives with the story attached: what made them say yes,
+             what they're trying to fix, and who else has to sign off. Nobody starts
+             the conversation from scratch.</p>
         </li>
       </ol>
     </div>
@@ -618,44 +634,34 @@ a { color: inherit; }
       <ol class="rows" data-stagger>
         <li class="row">
           <span class="row__n">01</span>
-          <div class="row__b">
-            <h3 class="h3">Agree on who counts</h3>
-            <p>Titles, company size, trigger events. We settle what "qualified" means
-               before I make a single dial, so nobody argues about lead quality in
-               week three.</p>
-          </div>
+          <h3 class="h3">Agree on who counts</h3>
+          <p>Titles, company size, trigger events. We settle what "qualified" means
+             before I make a single dial, so nobody argues about lead quality in
+             week three.</p>
         </li>
         <li class="row">
           <span class="row__n">02</span>
-          <div class="row__b">
-            <h3 class="h3">Build the list by hand</h3>
-            <p>Account by account, verified. Bulk lists burn your sending domain and
-               waste the calls.</p>
-          </div>
+          <h3 class="h3">Build the list by hand</h3>
+          <p>Account by account, verified. Bulk lists burn your sending domain and
+             waste the calls.</p>
         </li>
         <li class="row">
           <span class="row__n">03</span>
-          <div class="row__b">
-            <h3 class="h3">Run both channels at once</h3>
-            <p>Sequences run against the same accounts I'm dialing. Whichever one they
-               answer, there's a person on the other end who knows their business.</p>
-          </div>
+          <h3 class="h3">Run both channels at once</h3>
+          <p>Sequences run against the same accounts I'm dialing. Whichever one they
+             answer, there's a person on the other end who knows their business.</p>
         </li>
         <li class="row">
           <span class="row__n">04</span>
-          <div class="row__b">
-            <h3 class="h3">Qualify live</h3>
-            <p>If it doesn't hold up on the phone, it doesn't reach your calendar.</p>
-          </div>
+          <h3 class="h3">Qualify live</h3>
+          <p>If it doesn't hold up on the phone, it doesn't reach your calendar.</p>
         </li>
         <li class="row">
           <span class="row__n">05</span>
-          <div class="row__b">
-            <h3 class="h3">Hand it off clean</h3>
-            <p>Meeting booked with notes attached. Weekly numbers on dials, replies,
-               meetings set, and meetings actually held — that last one is the only
-               metric that counts.</p>
-          </div>
+          <h3 class="h3">Hand it off clean</h3>
+          <p>Meeting booked with notes attached. Weekly numbers on dials, replies,
+             meetings set, and meetings actually held — that last one is the only
+             metric that counts.</p>
         </li>
       </ol>
     </div>
